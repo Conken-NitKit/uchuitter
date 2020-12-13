@@ -51,6 +51,9 @@ const App = (props) => {
           };
           await setMyAccount(postData);
           await db.collection("uchuitter").doc(myAccount.id).set(postData);
+          await createTimeLine((newTimeLine) =>
+            setTimeLine(newTimeLine)
+          );
         }}
       >
         Tweet
