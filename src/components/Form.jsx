@@ -77,6 +77,9 @@ const FormBox = styled.div`
   border-radius: 10px;
   margin: 20px auto 0;
   pointer-events: none;
+  &:active {
+    box-shadow: 0 0 12px rgba(255, 254, 59, 0.2);
+  }
 `;
 
 const FormInput = styled.input`
