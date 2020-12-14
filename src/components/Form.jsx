@@ -118,7 +118,7 @@ const SubmitButton = styled.div`
   }
 `;
 
-export default function (props) {
+const Form = (props) => {
   const [isSignIn, setisSignIn] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -168,4 +168,6 @@ export default function (props) {
       </SubmitButton>
     </div>
   );
-}
+};
+
+export default Form;

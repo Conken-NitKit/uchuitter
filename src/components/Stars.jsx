@@ -2,7 +2,7 @@ import * as THREE from "three/src/Three";
 import React, { useRef, useMemo } from "react";
 import { useRender } from "react-three-fiber";
 
-export default function () {
+const Stars = () => {
   let group = useRef();
   let theta = 0;
 
@@ -41,4 +41,6 @@ export default function () {
       ))}
     </group>
   );
-}
+};
+
+export default Stars;

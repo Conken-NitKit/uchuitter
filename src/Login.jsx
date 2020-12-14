@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Canvas } from "react-three-fiber";
-import Form from "./components/Form"
-import Stars from "./components/Stars"
+import Form from "./components/Form";
+import Stars from "./components/Stars";
 import CameraController from "./controller/cameraController";
 
 import "./style.css";
@@ -21,7 +21,7 @@ const SpaceBackground = styled.div`
   background: #272727;
 `;
 
-export default function (props) {
+const Login = (props) => {
   return (
     <div>
       <SpaceBackground>
@@ -30,7 +30,9 @@ export default function (props) {
           <Stars />
         </Canvas>
       </SpaceBackground>
-      <Form history={props.history}/>
+      <Form history={props.history} />
     </div>
   );
-}
+};
+
+export default Login;
