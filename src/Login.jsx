@@ -22,16 +22,6 @@ const SpaceBackground = styled.div`
 `;
 
 const Login = (props) => {
-
-  console.log({
-    apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
-    authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
-    databaseURL: process.env.REACT_APP_FIREBASE_DATABASE,
-    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-    messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
-    appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  })
-  
   return (
     <div>
       <SpaceBackground>
