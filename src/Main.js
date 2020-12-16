@@ -1,6 +1,6 @@
 import * as THREE from "three/src/Three";
-import { CSS3DObject, CSS3DRenderer } from 'three-css3drenderer';
-import * as dat from 'dat.gui';
+import { CSS3DObject, CSS3DRenderer } from "three-css3drenderer";
+import * as dat from "dat.gui";
 import React from "react";
 
 let string =
@@ -18,24 +18,24 @@ class ThreeScene extends React.Component {
     const width = this.mount.clientWidth;
     const height = this.mount.clientHeight;
 
-    //     // create a scene, that will hold all our elements such as objects, cameras and lights.
+    // オブジェクト、カメラ、ライトなどの全ての要素を保持するシーンを作成する
     this.scene = new THREE.Scene();
-    //     // create a camera, which defines where we're looking at.
+    // カメラの定義 (視野角, アスペクト比, 近くの限界距離, 遠くの限界距離)
     this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-    // create a CSS3DRenderer
+
+    // 描画領域としてのDOMを設定
     this.renderer = new CSS3DRenderer();
     this.renderer.setSize(width, height);
     this.renderer.domElement.style.position = "absolute";
     this.renderer.domElement.style.top = 0;
 
-    // position and point the camera to the center of the scene
+    // カメラを指定座標に設置し、向きをシーンの中央に向ける
     this.camera.position.x = 500;
     this.camera.position.y = 475;
     this.camera.position.z = 767;
     this.camera.lookAt(this.scene.position);
 
-    // add the output of the renderer to the html element
-    // document.body.appendChild(renderer.domElement);
+    // レンダラーの出力をhtml要素に追加する
     this.mount.appendChild(this.renderer.domElement);
 
     for (let i = 0; i < 8; i++) {
@@ -81,8 +81,6 @@ class ThreeScene extends React.Component {
       this.camera.position.z = value;
     });
 
-    // addControls(control);
-
     this.start();
   }
   componentWillUnmount() {
@@ -118,12 +116,12 @@ class ThreeScene extends React.Component {
 }
 
 function createCSS3DObject(s) {
-  // convert the string to dome elements
+  // 文字列をDOM要素に変換
   var wrapper = document.createElement("div");
   wrapper.innerHTML = s;
   var div = wrapper.firstChild;
 
-  // set some values on the div to style it, standard CSS
+  // DOM要素にCSSを当てる
   div.style.width = "375px";
   div.style.height = "375px";
   div.style.opacity = 1;
@@ -131,7 +129,7 @@ function createCSS3DObject(s) {
   div.style.transition = "top 0.2s linear";
   div.style.background = new THREE.Color(Math.random() * 0xffffff).getStyle();
 
-  // create a CSS3Dobject and return it.
+  // DOM要素からCSSオブジェクトを生成する
   var object = new CSS3DObject(div);
   return object;
 }
