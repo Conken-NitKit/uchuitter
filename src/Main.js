@@ -1,6 +1,7 @@
 import * as THREE from "three/src/Three";
 import { CSS3DObject, CSS3DRenderer } from "three-css3drenderer";
 import React from "react";
+import Humberger from "./components/Humberger";
 
 let string =
   "<div>" +
@@ -92,12 +93,15 @@ class ThreeScene extends React.Component {
 
   render() {
     return (
-      <div
-        style={{ width: "800px", height: "800px" }}
-        ref={(mount) => {
-          this.mount = mount;
-        }}
-      />
+      <>
+        <div
+          style={{ width: "800px", height: "800px" }}
+          ref={(mount) => {
+            this.mount = mount;
+          }}
+        />
+        <Humberger />
+      </>
     );
   }
 }
