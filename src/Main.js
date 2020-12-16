@@ -1,6 +1,5 @@
 import * as THREE from "three/src/Three";
 import { CSS3DObject, CSS3DRenderer } from "three-css3drenderer";
-import * as dat from "dat.gui";
 import React from "react";
 
 let string =
@@ -68,18 +67,6 @@ class ThreeScene extends React.Component {
       cameraY: 450,
       cameraZ: 780,
     };
-
-    var gui = new dat.GUI();
-    gui.add(control, "cameraX", 0, 1000, 1).onChange((value) => {
-      this.camera.position.x = value;
-    });
-    gui.add(control, "cameraY", 0, 1000, 1).onChange((value) => {
-      this.camera.position.y = value;
-    });
-
-    gui.add(control, "cameraZ", 0, 1000, 1).onChange((value) => {
-      this.camera.position.z = value;
-    });
 
     this.start();
   }
