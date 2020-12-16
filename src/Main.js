@@ -1,7 +1,8 @@
 import * as THREE from "three/src/Three";
 import { CSS3DObject, CSS3DRenderer } from "three-css3drenderer";
 import React from "react";
-import styled from "styled-components"
+import styled from "styled-components";
+import { renderToString } from "react-dom/server";
 import Humberger from "./components/Humberger";
 
 const Renderer = styled.div`
@@ -11,13 +12,6 @@ const Renderer = styled.div`
   width: 100vw;
   height: 100vh;
 `;
-
-let string =
-  "<div>" +
-  "<h1>This is an H1 Element.</h1>" +
-  '<span class="large">Hello Three.js cookbook</span>' +
-  "<textarea> And this is a textarea</textarea>" +
-  "</div>";
 
 // global variables
 let control;
@@ -48,9 +42,20 @@ class ThreeScene extends React.Component {
     this.mount.appendChild(this.renderer.domElement);
 
     for (let i = 0; i < 8; i++) {
-      let cssElement = createCSS3DObject(string);
+
+      // JSX要素を文字列(string)に変換
+      const stringElement = renderToString(
+        <Renderer>
+          <h1>Sample Date</h1>
+          <button onClick={() => console.log("ok")}>test</button>
+        </Renderer>
+      );
+
+      // 生成したstringをもとにCSS3DObjectを生成する
+      const cssElement = createCSS3DObject(stringElement);
       cssElement.position.set(100, 100, 100 + 50 * i);
 
+      // マウスでホバーした時のアクション
       cssElement.element.addEventListener(
         "mouseover",
         (e) => {
@@ -60,6 +65,7 @@ class ThreeScene extends React.Component {
         false
       );
 
+      // マウスでホバーを解除した時のアクション
       cssElement.element.addEventListener(
         "mouseout",
         (e) => {
@@ -69,6 +75,7 @@ class ThreeScene extends React.Component {
         false
       );
 
+      // シーンに追加する
       this.scene.add(cssElement);
     }
 
