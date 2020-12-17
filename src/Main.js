@@ -85,7 +85,7 @@ class ThreeScene extends React.Component {
       cssElement.element.addEventListener(
         "click",
         () => {
-          console.log(i);
+          this.camera.lookAt(cssElement.position);
         },
         false
       );
