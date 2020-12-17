@@ -13,6 +13,34 @@ const Renderer = styled.div`
   height: 100vh;
 `;
 
+const TweetCard = styled.div`
+  max-width: 560px;
+  box-shadow: 0px 0px 12px rgba(0, 255, 255, 0.5);
+  border: 1px solid rgba(127, 255, 255, 0.25);
+  font-family: Helvetica, sans-serif;
+  text-align: center;
+  line-height: normal;
+  transition: top 0.2s linear;
+  background-color: rgba(18, 77, 174, ${(props) => props.opacity});
+  padding: 16px 56px;
+  &:hover {
+    box-shadow: 0px 0px 12px rgba(0, 255, 255, 0.75);
+    border: 1px solid rgba(127, 255, 255, 0.75);
+  }
+`;
+
+const TweetText = styled.p`
+  font-size: 36px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.75);
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.95);
+`;
+
+const AuthorText = styled.p`
+  font-size: 24px;
+  color: rgba(127, 255, 255, 0.75);
+`;
+
 // global variables
 let control;
 
@@ -42,35 +70,22 @@ class ThreeScene extends React.Component {
     this.mount.appendChild(this.renderer.domElement);
 
     for (let i = 0; i < 8; i++) {
-
       // JSX要素を文字列(string)に変換
       const stringElement = renderToString(
-        <Renderer>
-          <h1>Sample Date</h1>
-          <button onClick={() => console.log("ok")}>test</button>
-        </Renderer>
+        <TweetCard opacity={Math.random() * 0.55 + 0.1}>
+          <TweetText>今日、頭が冴えてるわ〜</TweetText>
+          <AuthorText>kubo-hide-kun</AuthorText>
+        </TweetCard>
       );
 
       // 生成したstringをもとにCSS3DObjectを生成する
       const cssElement = createCSS3DObject(stringElement);
-      cssElement.position.set(100, 100, 100 + 50 * i);
+      cssElement.position.set(100, 100, 150 * (i - 3));
 
-      // マウスでホバーした時のアクション
       cssElement.element.addEventListener(
-        "mouseover",
-        (e) => {
-          console.log(e.currentTarget);
-          e.currentTarget.style.top = "200px";
-        },
-        false
-      );
-
-      // マウスでホバーを解除した時のアクション
-      cssElement.element.addEventListener(
-        "mouseout",
-        (e) => {
-          console.log(e.currentTarget);
-          e.currentTarget.style.top = "0px";
+        "click",
+        () => {
+          console.log(i);
         },
         false
       );
@@ -126,14 +141,6 @@ function createCSS3DObject(s) {
   var wrapper = document.createElement("div");
   wrapper.innerHTML = s;
   var div = wrapper.firstChild;
-
-  // DOM要素にCSSを当てる
-  div.style.width = "375px";
-  div.style.height = "375px";
-  div.style.opacity = 1;
-  div.style["will-change"] = "all";
-  div.style.transition = "top 0.2s linear";
-  div.style.background = new THREE.Color(Math.random() * 0xffffff).getStyle();
 
   // DOM要素からCSSオブジェクトを生成する
   var object = new CSS3DObject(div);
