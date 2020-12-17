@@ -40,7 +40,6 @@ const Buttons = styled.div`
   pointer-events: none;
   margin-top: 64px;
   ${sp`
-    margin-top: 176px;
     flex-direction: column;
   `}
 `;
@@ -49,7 +48,7 @@ const Button = styled.button`
   color: ${(props) => (props.isSelected ? "#fff" : "#3acbec")};
   font-size: 15px;
   width: 180px;
-  margin: 15px 30px;
+  margin: 10px 30px;
   outline: none;
   text-align: center;
   font-weight: 500;
@@ -80,6 +79,10 @@ const FormBox = styled.div`
   &:active {
     box-shadow: 0 0 12px rgba(255, 254, 59, 0.2);
   }
+  ${sp`
+    margin-bottom: 2px;
+    width: 80%;
+  `}
 `;
 
 const FormInput = styled.input`
@@ -87,7 +90,7 @@ const FormInput = styled.input`
   border: none;
   outline: none;
   text-align: center;
-  width: 90%;
+  width: 100%;
   font-family: "Montserrat", sans-serif;
   line-height: 37px;
   color: #333;
@@ -96,6 +99,10 @@ const FormInput = styled.input`
     animation-name: onAutoFillStart;
     transition: background-color 50000s ease-in-out 0s;
   }
+  ${sp`
+    margin-bottom: 2px;
+    width: 100%;
+  `}
 `;
 
 const SubmitButton = styled.div`
@@ -116,6 +123,10 @@ const SubmitButton = styled.div`
     box-shadow: 0 0 16px rgba(255, 255, 255, 0.4);
     text-shadow: 0 0 16px #fff;
   }
+  ${sp`
+    margin-bottom: 5px;
+    width: 80%;
+  `}
 `;
 
 const Form = (props) => {
