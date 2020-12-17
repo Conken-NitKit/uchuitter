@@ -6,6 +6,7 @@ import { renderToString } from "react-dom/server";
 
 import TweetCard from "./components/TweetCard"
 import Humberger from "./components/Humberger";
+import { Vector3 } from "three/src/Three";
 
 const Renderer = styled.div`
   position: fixed;
@@ -13,6 +14,16 @@ const Renderer = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
+`;
+
+const StarDiv = styled.div`
+//星のCSS情報
+  content: "";
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: lightblue;
 `;
 
 // global variables
@@ -38,7 +49,7 @@ class ThreeScene extends React.Component {
     this.camera.position.x = 500;
     this.camera.position.y = 475;
     this.camera.position.z = 767;
-    this.camera.lookAt(this.scene.position);
+    this.camera.lookAt(new Vector3(0, 0, 500, true));
 
     // レンダラーの出力をhtml要素に追加する
     this.mount.appendChild(this.renderer.domElement);
@@ -65,6 +76,18 @@ class ThreeScene extends React.Component {
       this.scene.add(cssElement);
     }
 
+    const stringStar = renderToString(<StarDiv />);
+    //星のデータを変換
+    for (let i = 0; i < 5000; i++){
+      const css3DStar = createCSS3DObject(stringStar);
+      css3DStar.position.set(
+        Math.random() * 3000 - 1500,
+        Math.random() * 3000 - 1500,
+        Math.random() * 3000 - 1500
+      );
+      this.scene.add(css3DStar)
+    }
+    
     control = {
       cameraX: 500,
       cameraY: 450,
