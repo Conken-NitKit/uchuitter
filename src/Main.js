@@ -1,22 +1,19 @@
 import * as THREE from "three/src/Three";
 import { CSS3DObject, CSS3DRenderer } from "three-css3drenderer";
+import { TrackballControls } from "three/examples/jsm/controls/TrackballControls";
 import React from "react";
 import styled from "styled-components";
 import { renderToString } from "react-dom/server";
 
-import TweetCard from "./components/TweetCard"
+import TweetCard from "./components/TweetCard";
 import Humberger from "./components/Humberger";
 
 const Renderer = styled.div`
-  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
 `;
-
-// global variables
-let control;
 
 class ThreeScene extends React.Component {
   componentDidMount() {
@@ -45,9 +42,7 @@ class ThreeScene extends React.Component {
 
     for (let i = 0; i < 8; i++) {
       // JSX要素を文字列(string)に変換
-      const stringElement = renderToString(
-        <TweetCard />
-      );
+      const stringElement = renderToString(<TweetCard />);
 
       // 生成したstringをもとにCSS3DObjectを生成する
       const cssElement = createCSS3DObject(stringElement);
@@ -65,11 +60,10 @@ class ThreeScene extends React.Component {
       this.scene.add(cssElement);
     }
 
-    control = {
-      cameraX: 500,
-      cameraY: 450,
-      cameraZ: 780,
-    };
+    this.control = new TrackballControls(this.camera, this.renderer.domElement);
+    this.control.minDistance = 550;
+    this.control.maxDistance = 6000;
+    this.control.addEventListener("change", this.render);
 
     this.start();
   }
@@ -88,6 +82,7 @@ class ThreeScene extends React.Component {
   animate = () => {
     this.renderScene();
     this.frameId = window.requestAnimationFrame(this.animate);
+    this.control.update();
   };
   renderScene = () => {
     this.renderer.render(this.scene, this.camera);
