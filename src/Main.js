@@ -1,7 +1,10 @@
 import * as THREE from "three/src/Three";
 import { CSS3DObject, CSS3DRenderer } from "three-css3drenderer";
 import React from "react";
-import styled from "styled-components"
+import styled from "styled-components";
+import { renderToString } from "react-dom/server";
+
+import TweetCard from "./components/TweetCard"
 import Humberger from "./components/Humberger";
 
 const Renderer = styled.div`
@@ -11,13 +14,6 @@ const Renderer = styled.div`
   width: 100vw;
   height: 100vh;
 `;
-
-let string =
-  "<div>" +
-  "<h1>This is an H1 Element.</h1>" +
-  '<span class="large">Hello Three.js cookbook</span>' +
-  "<textarea> And this is a textarea</textarea>" +
-  "</div>";
 
 // global variables
 let control;
@@ -48,27 +44,24 @@ class ThreeScene extends React.Component {
     this.mount.appendChild(this.renderer.domElement);
 
     for (let i = 0; i < 8; i++) {
-      let cssElement = createCSS3DObject(string);
-      cssElement.position.set(100, 100, 100 + 50 * i);
+      // JSX要素を文字列(string)に変換
+      const stringElement = renderToString(
+        <TweetCard />
+      );
+
+      // 生成したstringをもとにCSS3DObjectを生成する
+      const cssElement = createCSS3DObject(stringElement);
+      cssElement.position.set(100, 100, 150 * (i - 3));
 
       cssElement.element.addEventListener(
-        "mouseover",
-        (e) => {
-          console.log(e.currentTarget);
-          e.currentTarget.style.top = "200px";
+        "click",
+        () => {
+          this.camera.lookAt(cssElement.position);
         },
         false
       );
 
-      cssElement.element.addEventListener(
-        "mouseout",
-        (e) => {
-          console.log(e.currentTarget);
-          e.currentTarget.style.top = "0px";
-        },
-        false
-      );
-
+      // シーンに追加する
       this.scene.add(cssElement);
     }
 
@@ -119,14 +112,6 @@ function createCSS3DObject(s) {
   var wrapper = document.createElement("div");
   wrapper.innerHTML = s;
   var div = wrapper.firstChild;
-
-  // DOM要素にCSSを当てる
-  div.style.width = "375px";
-  div.style.height = "375px";
-  div.style.opacity = 1;
-  div.style["will-change"] = "all";
-  div.style.transition = "top 0.2s linear";
-  div.style.background = new THREE.Color(Math.random() * 0xffffff).getStyle();
 
   // DOM要素からCSSオブジェクトを生成する
   var object = new CSS3DObject(div);
