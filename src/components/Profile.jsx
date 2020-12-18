@@ -104,7 +104,7 @@ const DateSpan = styled.span`
 const Profile = (props) => {
   const [userName, setUserName] = useState("kubo-hide-kun");
   const [canEdit, setCanEdit] = useState(false);
-  const [isView, setIsView] = useState(true);
+
   return (
     <ProfileDiv>
       <CloseDiv>
