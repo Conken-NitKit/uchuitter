@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { db, auth } from "../firebase";
+import generateUuid from "../functions/generateUuid";
 import Close from "react-ionicons/lib/MdClose";
 
 const ModalBack = styled.div`
@@ -75,6 +77,26 @@ const UchueetButton = styled.button`
 `;
 
 const UchueetModal = (props) => {
+  const [account, setAccount] = useState(null);
+  const [tweetText, setTweetText] = useState("");
+
+  useEffect(() => {
+    const unSub = auth.onAuthStateChanged(async (user) => {
+      const uchuitterRef = user && db.collection("uchuitter").doc(user.uid);
+      if (user) {
+        await uchuitterRef
+          .get()
+          .then((doc) => !account && setAccount(doc.data()))
+          .catch((err) => console.log("Error getting documents", err));
+      } else {
+        props.history.push("login");
+      }
+    });
+    return () => {
+      unSub();
+    };
+  });
+
   return (
     <ModalBack>
       <Modal>
@@ -86,12 +108,30 @@ const UchueetModal = (props) => {
           />
         </ModalHeader>
         <ModalBody>
-          <ModalTextField placeholder={"宇宙空間にメッセージを送ろう！！"} />
+          <ModalTextField
+          value={tweetText}
+          placeholder={"宇宙空間にメッセージを送ろう！！"}
+          onChange={(e) => setTweetText(e.target.value)}
+          />
         </ModalBody>
         <ModalFooter>
           <UchueetButton
-            onClick={() => {
-              props.close();
+            onClick={async () => {
+              const postData = {
+                ...account,
+                tweets: [
+                  ...account.tweets,
+                  {
+                    autherId: account.id,
+                    tweetId: generateUuid(),
+                    content: tweetText,
+                    createAt: new Date(),
+                    like: [],
+                  },
+                ],
+              };
+              await db.collection("uchuitter").doc(account.id).set(postData);
+              props.close()
             }}
           >
             うちゅいーとする
