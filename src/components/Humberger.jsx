@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+import Profile from "./Profile";
+
 const HumbergerList = styled.ul`
   margin-top: 150px;
 `;
@@ -118,6 +120,7 @@ const Humberger = () => {
         </HumbergerList>
       </HumbergerBar>
       <UchuiteButton isOpen={isOpen} onClick={() => console.log("うちゅいーと")}/>
+      <Profile />
     </>
   );
 };

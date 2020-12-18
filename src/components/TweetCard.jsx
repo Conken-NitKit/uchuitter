@@ -24,21 +24,22 @@ const TweetText = styled.p`
 `;
 
 const AuthorText = styled.p`
-  font-size: 24px;
+  font-size: 32px;
   color: rgba(127, 255, 255, 0.75);
   text-shadow: 0 0 10px rgba(0, 255, 255, 0.45);
 `;
 
 const DateSpan = styled.span`
-  position: absolute;
-  right: 56px;
+  font-size: 24px;
+  padding-left: 32px;
   color: rgba(127, 255, 255, 0.75);
 `;
 
 const Tweet = () => (
   <TweetCard opacity={Math.random() * 0.55 + 0.1}>
     <AuthorText>
-      kubo-hide-kun<DateSpan>12月9日</DateSpan>
+        kubo-hide-kun
+        <DateSpan>12月9日</DateSpan>
     </AuthorText>
     <TweetText>
       雪見だいふく、「一つ頂戴」と言わずに「半分頂戴」と自分の発言の罪深さを噛み締めながら分けてくれるように言ってほしい。
