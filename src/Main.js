@@ -15,9 +15,8 @@ const Renderer = styled.div`
   width: 100vw;
   height: 100vh;
 `;
-
+//星のcss情報
 const StarDiv = styled.div`
-//星のCSS情報
   content: "";
   height: 5px;
   width: 5px;
@@ -26,7 +25,13 @@ const StarDiv = styled.div`
   box-shadow: 0 0 4.5px lightblue;
 
 `
-
+//のcss情報
+const CubeDiv = styled.div`
+  height: 800px;
+  width: 800px;
+  border: 100px double rgba(127, 255, 255, 1);
+  background-color: rgba(0, 255, 255, 0.5);
+`
 class ThreeScene extends React.Component {
   componentDidMount() {
     const width = this.mount.clientWidth;
@@ -44,34 +49,81 @@ class ThreeScene extends React.Component {
     this.renderer.domElement.style.top = 0;
 
     // カメラを指定座標に設置し、向きをシーンの中央に向ける
-    this.camera.position.x = 500;
-    this.camera.position.y = 475;
-    this.camera.position.z = 767;
+    this.camera.position.x = 1000;
+    this.camera.position.y = 1000;
+    this.camera.position.z = 1000;
     this.camera.lookAt(new Vector3(0, 0, 500, true));
 
     // レンダラーの出力をhtml要素に追加する
     this.mount.appendChild(this.renderer.domElement);
 
-    for (let i = 0; i < 8; i++) {
+   //ツイート内容の配置 
+   const vector = new THREE.Vector3();
+    for ( let i = 0, l = 115; i < l; i ++ ) {
       // JSX要素を文字列(string)に変換
       const stringElement = renderToString(<TweetCard />);
 
       // 生成したstringをもとにCSS3DObjectを生成する
       const cssElement = createCSS3DObject(stringElement);
-      cssElement.position.set(100, 100, 150 * (i - 3));
-      cssElement.element.addEventListener(
-        "click",
-        () => {
-          this.camera.lookAt(cssElement.position);
-        },
-        false
-      );
+
+      const phi = Math.acos( - 1 + ( 2 * i ) / l );
+      const theta = Math.sqrt( l * Math.PI ) * phi;
+
+      cssElement.position.setFromSphericalCoords( 1000, phi, theta );
+
+      vector.copy( cssElement.position ).multiplyScalar( 2 );
+
+      cssElement.lookAt( vector );
 
       // シーンに追加する
       this.scene.add(cssElement);
-    }
-  
-    //星のデータを変換
+		}
+    
+    //コンテンツの表示
+    const stringCube = renderToString(<CubeDiv />);
+    const css3DCube = createCSS3DObject(stringCube);
+
+    css3DCube.position.set(
+      0,0,410
+    );
+    this.scene.add(css3DCube)
+    
+    const css3DCube2 = createCSS3DObject(stringCube);
+    css3DCube2.position.set(
+      0,0,-410
+    );
+    this.scene.add(css3DCube2)
+
+    const css3DCube3 = createCSS3DObject(stringCube);
+    css3DCube3.rotation.y = Math.PI / 2;
+    css3DCube3.position.set(
+      410,0,0
+    );
+    this.scene.add(css3DCube3)
+    
+    const css3DCube4 = createCSS3DObject(stringCube);
+    css3DCube4.rotation.y = Math.PI / 2;
+    css3DCube4.position.set(
+      -410,0,0
+    );
+    this.scene.add(css3DCube4)
+
+    const css3DCube5 = createCSS3DObject(stringCube);
+    css3DCube5.rotation.x = Math.PI / 2;
+    css3DCube5.position.set(
+      0,410,0
+    );
+    this.scene.add(css3DCube5)
+
+    const css3DCube6 = createCSS3DObject(stringCube);
+    css3DCube6.rotation.x = Math.PI / 2;
+    css3DCube6.position.set(
+      0,-410,0
+    );
+    this.scene.add(css3DCube6)
+
+
+    //星背景の表示
     for (let i = 0; i < 1000; i++){
       
       const x = Math.random() * 3000 - 1500;
@@ -104,7 +156,7 @@ class ThreeScene extends React.Component {
     
     this.control = new TrackballControls(this.camera, this.renderer.domElement);
     this.control.minDistance = 550;
-    this.control.maxDistance = 6000;
+    this.control.maxDistance = 1800;
     this.control.addEventListener("change", this.render);
 
     this.start();

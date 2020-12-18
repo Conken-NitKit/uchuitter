@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const TweetCard = styled.div`
-  max-width: 640px;
+  max-width: 300px;
   box-shadow: 0px 0px 12px rgba(0, 255, 255, 0.5);
   border: 1px solid rgba(127, 255, 255, 0.25);
   font-family: Helvetica, sans-serif;
@@ -17,14 +17,14 @@ const TweetCard = styled.div`
 `;
 
 const TweetText = styled.p`
-  font-size: 32px;
+  font-size: 15px;
   font-weight: bold;
   color: rgba(255, 255, 255, 0.75);
   text-shadow: 0 0 10px rgba(0, 255, 255, 0.95);
 `;
 
 const AuthorText = styled.p`
-  font-size: 24px;
+  font-size: 3px;
   color: rgba(127, 255, 255, 0.75);
   text-shadow: 0 0 10px rgba(0, 255, 255, 0.45);
 `;
@@ -36,7 +36,7 @@ const DateSpan = styled.span`
 `;
 
 const Tweet = () => (
-  <TweetCard opacity={Math.random() * 0.55 + 0.1}>
+  <TweetCard opacity={Math.random() * 0.55 + 0.3}>
     <AuthorText>
       kubo-hide-kun<DateSpan>12月9日</DateSpan>
     </AuthorText>
