@@ -10117,6 +10117,13 @@ react-spring@^8.0.27:
     "@babel/runtime" "^7.3.1"
     prop-types "^15.5.8"
 
+react-styled-frame@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-styled-frame/-/react-styled-frame-1.1.0.tgz#8c36168c3b00386e128df16a97c6458e7cc56310"
+  integrity sha512-/qcjXG4ZEySJao1kyUrri+we4sQYNgfkz1/Hw5/dJ+zGUUqkeZSHycSCVqe8CVPT0o9EP4JRA6IqwzjOXyDXCA==
+  dependencies:
+    react-frame-component "^4.0.1"
+
 react-three-fiber@3.0.0-beta.13:
   version "3.0.0-beta.13"
   resolved "https://registry.yarnpkg.com/react-three-fiber/-/react-three-fiber-3.0.0-beta.13.tgz#3203d10dcd471d6fe1e96d1dfb46bfb87b80f550"
