@@ -13,10 +13,6 @@ const HumbergerContent = styled.li`
   list-style: none;
   border-bottom: solid white 1px;
   padding: 5px;
-  &::before {
-    content: "@";
-    margin: 0 3px;
-  }
 `;
 
 const HumbergerBar = styled.div`
@@ -86,6 +82,19 @@ const LineBottom = styled.div`
   transform: rotate(${(props) => (props.isOpen ? -45 : 0)}deg);
 `;
 
+const UchuiteButton = styled.div`
+  position: fixed;
+  right: 32px;
+  bottom: 48px;
+  height: 64px;
+  width: 64px;
+  border-radius: 50%;
+  transition: 0.35s all;
+  background-color: rgba(
+    ${(props) => (props.isOpen ? "51, 190, 255, 0" : "51, 190, 255, 0.8")}
+  );
+`
+
 const Humberger = () => {
   const [isOpen, setIsOpen] = useState(true);
   return (
@@ -95,16 +104,20 @@ const Humberger = () => {
         <LineMiddle isOpen={isOpen} />
         <LineBottom isOpen={isOpen} />
       </HumbergerButton>
-      <HumbergerBar isOpen={isOpen}>
+      <HumbergerBar isOpen={isOpen} >
         <HumbergerList>
-          <HumbergerContent>test1</HumbergerContent>
-          <HumbergerContent>test2</HumbergerContent>
-          <HumbergerContent>test3</HumbergerContent>
-          <HumbergerContent>test4</HumbergerContent>
-          <HumbergerContent>test5</HumbergerContent>
-          <HumbergerContent>test6</HumbergerContent>
+          <HumbergerContent onClick={() => console.log("プロイフィール")}>
+              プロフィール
+          </HumbergerContent>
+          <HumbergerContent onClick={() => console.log("ユーザー検索")}>
+              ユーザー検索
+          </HumbergerContent>
+          <HumbergerContent onClick={() => console.log("ログアウト")}>
+              ログアウト
+          </HumbergerContent>
         </HumbergerList>
       </HumbergerBar>
+      <UchuiteButton isOpen={isOpen} onClick={() => console.log("うちゅいーと")}/>
     </>
   );
 };
