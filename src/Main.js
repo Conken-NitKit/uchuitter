@@ -1,15 +1,15 @@
 import * as THREE from "three/src/Three";
 import { CSS3DObject, CSS3DRenderer } from "three-css3drenderer";
+import { TrackballControls } from "three/examples/jsm/controls/TrackballControls";
 import React from "react";
 import styled from "styled-components";
 import { renderToString } from "react-dom/server";
 
-import TweetCard from "./components/TweetCard"
+import TweetCard from "./components/TweetCard";
 import Humberger from "./components/Humberger";
 import { Vector3 } from "three/src/Three";
 
 const Renderer = styled.div`
-  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
@@ -19,15 +19,13 @@ const Renderer = styled.div`
 const StarDiv = styled.div`
 //星のCSS情報
   content: "";
-  height: 10px;
-  width: 10px;
+  height: 5px;
+  width: 5px;
   border-radius: 50%;
-  background-color: white;
-  box-shadow: lightblue;
-`;
+  background-color: ${(props) => props.color};
+  box-shadow: 0 0 4.5px lightblue;
 
-// global variables
-let control;
+`
 
 class ThreeScene extends React.Component {
   componentDidMount() {
@@ -56,14 +54,11 @@ class ThreeScene extends React.Component {
 
     for (let i = 0; i < 8; i++) {
       // JSX要素を文字列(string)に変換
-      const stringElement = renderToString(
-        <TweetCard />
-      );
+      const stringElement = renderToString(<TweetCard />);
 
       // 生成したstringをもとにCSS3DObjectを生成する
       const cssElement = createCSS3DObject(stringElement);
       cssElement.position.set(100, 100, 150 * (i - 3));
-
       cssElement.element.addEventListener(
         "click",
         () => {
@@ -75,24 +70,42 @@ class ThreeScene extends React.Component {
       // シーンに追加する
       this.scene.add(cssElement);
     }
-
-    const stringStar = renderToString(<StarDiv />);
+  
     //星のデータを変換
-    for (let i = 0; i < 5000; i++){
+    for (let i = 0; i < 1000; i++){
+      
+      const x = Math.random() * 3000 - 1500;
+      const y = Math.random() * 3000 - 1500;
+      const z = Math.random() * 3000 - 1500;
+
+      const randomColor = ["lightskyblue", "lightgreen", "lightyellow","lightpink"];
+      const stringStar = renderToString(<StarDiv color={randomColor[Math.floor(Math.random()*4)]}/>);
+
       const css3DStar = createCSS3DObject(stringStar);
       css3DStar.position.set(
-        Math.random() * 3000 - 1500,
-        Math.random() * 3000 - 1500,
-        Math.random() * 3000 - 1500
+       x,y,z
       );
       this.scene.add(css3DStar)
+
+      const css3DStarX = createCSS3DObject(stringStar);
+      css3DStarX.rotation.x = Math.PI / 2;
+      css3DStarX.position.set(
+        x,y,z
+      )
+      this.scene.add(css3DStarX)
+
+      const css3DStarY = createCSS3DObject(stringStar);
+      css3DStarY.rotation.y = Math.PI / 2;
+      css3DStarY.position.set(
+        x,y,z
+      )
+      this.scene.add(css3DStarY)
     }
     
-    control = {
-      cameraX: 500,
-      cameraY: 450,
-      cameraZ: 780,
-    };
+    this.control = new TrackballControls(this.camera, this.renderer.domElement);
+    this.control.minDistance = 550;
+    this.control.maxDistance = 6000;
+    this.control.addEventListener("change", this.render);
 
     this.start();
   }
@@ -111,6 +124,7 @@ class ThreeScene extends React.Component {
   animate = () => {
     this.renderScene();
     this.frameId = window.requestAnimationFrame(this.animate);
+    this.control.update();
   };
   renderScene = () => {
     this.renderer.render(this.scene, this.camera);
