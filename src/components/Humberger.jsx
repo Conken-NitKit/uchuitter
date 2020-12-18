@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import Profile from "./Profile";
+import UchueetModal from "./UchueetModal"
 
 const HumbergerList = styled.ul`
   margin-top: 150px;
@@ -104,6 +105,7 @@ const UchuiteButton = styled.div`
 const Humberger = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [viewProfile, setViewProfile] = useState(false);
+  const [viewEditor, setViewEditor] = useState(false);
 
   return (
     <>
@@ -128,8 +130,9 @@ const Humberger = (props) => {
           </HumbergerContent>
         </HumbergerList>
       </HumbergerBar>
-      <UchuiteButton isHidden={isOpen || viewProfile} onClick={() => console.log("うちゅいーと")}/>
+      <UchuiteButton isHidden={isOpen || viewProfile} onClick={() => setViewEditor(true)}/>
       {viewProfile && <Profile close={() => setViewProfile(false)}/>}
+      {viewEditor && <UchueetModal close={() => setViewEditor(false)}/>}
     </>
   );
 };
