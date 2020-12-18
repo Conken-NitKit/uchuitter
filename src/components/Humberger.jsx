@@ -50,7 +50,9 @@ const LineTop = styled.div`
   height: 10px;
   padding: 2px;
   transition: 0.5s;
-  background-color: white;
+  background-color: rgba(
+    ${(props) => (props.isHidden ? "255, 255, 255, 0" : "255, 255, 255, 1")}
+  );
   transform: rotate(${(props) => (props.isOpen ? 45 : 0)}deg);
 `;
 
@@ -66,7 +68,7 @@ const LineMiddle = styled.div`
   transition: 0.3s all;
   visibility: ${(props) => (props.isOpen ? "hidden" : "visible")};
   background-color: rgba(
-    ${(props) => (props.isOpen ? "255, 255, 255, 0" : "255, 255, 255, 1")}
+    ${(props) => (props.isHidden ? "255, 255, 255, 0" : "255, 255, 255, 1")}
   );
 `;
 
@@ -80,7 +82,9 @@ const LineBottom = styled.div`
   height: 10px;
   padding: 2px;
   transition: 0.5s;
-  background-color: white;
+  background-color: rgba(
+    ${(props) => (props.isHidden ? "255, 255, 255, 0" : "255, 255, 255, 1")}
+  );
   transform: rotate(${(props) => (props.isOpen ? -45 : 0)}deg);
 `;
 
@@ -93,22 +97,27 @@ const UchuiteButton = styled.div`
   border-radius: 50%;
   transition: 0.35s all;
   background-color: rgba(
-    ${(props) => (props.isOpen ? "51, 190, 255, 0" : "51, 190, 255, 0.8")}
+    ${(props) => (props.isHidden ? "51, 190, 255, 0" : "51, 190, 255, 0.8")}
   );
 `
 
 const Humberger = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+  const [viewProfile, setViewProfile] = useState(false);
+
   return (
     <>
       <HumbergerButton onClick={() => setIsOpen(!isOpen)}>
-        <LineTop isOpen={isOpen} />
-        <LineMiddle isOpen={isOpen} />
-        <LineBottom isOpen={isOpen} />
+        <LineTop isOpen={isOpen} isHidden={viewProfile}/>
+        <LineMiddle isHidden={isOpen || viewProfile} />
+        <LineBottom isOpen={isOpen} isHidden={viewProfile}/>
       </HumbergerButton>
       <HumbergerBar isOpen={isOpen} >
         <HumbergerList>
-          <HumbergerContent onClick={() => console.log("プロイフィール")}>
+          <HumbergerContent onClick={() => {
+            setIsOpen(false);
+            setViewProfile(true);
+          }}>
               プロフィール
           </HumbergerContent>
           <HumbergerContent onClick={() => console.log("ユーザー検索")}>
@@ -119,8 +128,8 @@ const Humberger = () => {
           </HumbergerContent>
         </HumbergerList>
       </HumbergerBar>
-      <UchuiteButton isOpen={isOpen} onClick={() => console.log("うちゅいーと")}/>
-      <Profile />
+      <UchuiteButton isHidden={isOpen || viewProfile} onClick={() => console.log("うちゅいーと")}/>
+      {viewProfile && <Profile close={() => setViewProfile(false)}/>}
     </>
   );
 };

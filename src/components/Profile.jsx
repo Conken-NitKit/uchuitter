@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Create from "react-ionicons/lib/MdCreate";
+import Close from "react-ionicons/lib/MdClose";
 
 const ProfileDiv = styled.div`
   position: fixed;
@@ -13,11 +15,16 @@ const ProfileDiv = styled.div`
   z-index: 99;
 `;
 
+const CloseDiv = styled.div`
+  position: fixed;
+  right: 36px;
+`;
+
 const DefaultDiv = styled.div`
   position: relative;
-  width: 80vw;
+  width: 80%;
   max-width: 640px;
-  margin: 18px auto;
+  margin: 44px auto 18px;
 `;
 
 const UserNameDiv = styled.div`
@@ -26,9 +33,9 @@ const UserNameDiv = styled.div`
   width: 80vw;
   max-width: 560px;
   transform: translateX(-50%);
-  padding: 16px 6px;
+  padding: 28px 6px 16px;
   border-radius: 12px;
-  margin-bottom: 48px;
+  margin: 56px 0 48px;
   background: none;
   border: solid 1px rgba(61, 84, 102, 0.8);
   box-shadow: 0px 0px 12px rgba(0, 255, 255, 0.2);
@@ -44,7 +51,7 @@ const UserNameLabel = styled.label`
 
 const UserNameInput = styled.input`
   width: 100%;
-  font-size: 32px;
+  font-size: 28px;
   color: rgba(255, 255, 255, 0.75);
   font-weight: bold;
   text-shadow: 0 0 10px rgba(0, 255, 255, 0.95);
@@ -53,6 +60,12 @@ const UserNameInput = styled.input`
   background: none;
   border: none;
   outline: none;
+`;
+
+const UserNameIcon = styled.div`
+  position: absolute;
+  bottom: 30px;
+  right: 26px;
 `;
 
 const TweetCard = styled.div`
@@ -88,19 +101,43 @@ const DateSpan = styled.span`
   color: rgba(127, 255, 255, 0.75);
 `;
 
-const Profile = () => {
-  const [useName, setUserName] = useState("kubo-hide-kun");
+const Profile = (props) => {
+  const [userName, setUserName] = useState("kubo-hide-kun");
+  const [canEdit, setCanEdit] = useState(false);
   const [isView, setIsView] = useState(true);
   return (
     <ProfileDiv>
+      <CloseDiv>
+        <Close
+        fontSize="48px"
+        color="rgba(127, 255, 255, 0.9)"
+        onClick={() => props.close()}
+        />
+      </CloseDiv>
       <DefaultDiv>
         <UserNameDiv>
           <UserNameLabel for="name_input">ユーザーネーム</UserNameLabel>
           <UserNameInput
             id="name_input"
-            value={useName}
-            onChange={(e) => setUserName(e.target.value)}
+            value={userName}
+            disabled={canEdit ? "" : "disabled"}
+            onChange={(e) => canEdit && setUserName(e.target.value)}
           />
+          <UserNameIcon>
+            {canEdit ? (
+              <Close
+                onClick={() => setCanEdit(false)}
+                fontSize="28px"
+                color="rgba(127, 255, 255, 0.75)"
+              />
+            ) : (
+              <Create
+                onClick={() => setCanEdit(true)}
+                fontSize="28px"
+                color="rgba(127, 255, 255, 0.75)"
+              />
+            )}
+          </UserNameIcon>
         </UserNameDiv>
       </DefaultDiv>
       {new Array(10).fill().map((_) => (
