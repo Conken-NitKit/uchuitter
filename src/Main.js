@@ -4,6 +4,7 @@ import { TrackballControls } from "three/examples/jsm/controls/TrackballControls
 import React from "react";
 import styled from "styled-components";
 import { renderToString } from "react-dom/server";
+import { db, auth } from "./firebase";
 
 import TweetCard from "./components/TweetCard";
 import Humberger from "./components/Humberger";
@@ -16,6 +17,10 @@ const Renderer = styled.div`
 `;
 
 class ThreeScene extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log(props);
+  }
   componentDidMount() {
     const width = this.mount.clientWidth;
     const height = this.mount.clientHeight;
@@ -96,7 +101,16 @@ class ThreeScene extends React.Component {
             this.mount = mount;
           }}
         />
-        <Humberger />
+        <Humberger
+          logout={async () => {
+            try {
+              await auth.signOut();
+              this.props.history.push("login");
+            } catch (error) {
+              alert(error.message);
+            }
+          }}
+        />
       </>
     );
   }

@@ -101,7 +101,7 @@ const UchuiteButton = styled.div`
   );
 `
 
-const Humberger = () => {
+const Humberger = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [viewProfile, setViewProfile] = useState(false);
 
@@ -123,7 +123,7 @@ const Humberger = () => {
           <HumbergerContent onClick={() => console.log("ユーザー検索")}>
               ユーザー検索
           </HumbergerContent>
-          <HumbergerContent onClick={() => console.log("ログアウト")}>
+          <HumbergerContent onClick={() => props.logout()}>
               ログアウト
           </HumbergerContent>
         </HumbergerList>
