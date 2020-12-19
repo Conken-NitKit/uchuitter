@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
+import Add from "react-ionicons/lib/MdAdd";
+
 import Profile from "./Profile";
-import UchueetModal from "./UchueetModal"
+import UchueetModal from "./UchueetModal";
 
 const PlanetRotate = keyframes`
   to {
@@ -107,7 +109,7 @@ const UchueetButton = styled.div`
   border-color: rgba(
     ${(props) => (props.isHidden ? "51, 190, 255, 0" : "51, 190, 255, 0.8")}
   );
-`
+`;
 
 const PlanetSatellites = styled.div`
   position: fixed;
@@ -133,7 +135,7 @@ const PlanetLeft = styled.div`
   background-color: rgba(
     ${(props) => (props.isHidden ? "255, 255, 255, 0" : "0, 0, 0, 0.8")}
   );
-`
+`;
 
 const PlanetRight = styled.div`
   position: absolute;
@@ -150,7 +152,13 @@ const PlanetRight = styled.div`
   background-color: rgba(
     ${(props) => (props.isHidden ? "255, 255, 255, 0" : "0, 0, 0, 0.8")}
   );
-`
+`;
+
+const UchueetIcon = styled.div`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+`;
 
 const Humberger = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -160,33 +168,42 @@ const Humberger = (props) => {
   return (
     <>
       <HumbergerButton onClick={() => setIsOpen(!isOpen)}>
-        <LineTop isOpen={isOpen} isHidden={viewProfile}/>
+        <LineTop isOpen={isOpen} isHidden={viewProfile} />
         <LineMiddle isHidden={isOpen || viewProfile} />
-        <LineBottom isOpen={isOpen} isHidden={viewProfile}/>
+        <LineBottom isOpen={isOpen} isHidden={viewProfile} />
       </HumbergerButton>
-      <HumbergerBar isOpen={isOpen} >
+      <HumbergerBar isOpen={isOpen}>
         <HumbergerList>
-          <HumbergerContent onClick={() => {
-            setIsOpen(false);
-            setViewProfile(true);
-          }}>
-              プロフィール
+          <HumbergerContent
+            onClick={() => {
+              setIsOpen(false);
+              setViewProfile(true);
+            }}
+          >
+            プロフィール
           </HumbergerContent>
           <HumbergerContent onClick={() => console.log("ユーザー検索")}>
-              ユーザー検索
+            ユーザー検索
           </HumbergerContent>
           <HumbergerContent onClick={() => props.logout()}>
-              ログアウト
+            ログアウト
           </HumbergerContent>
         </HumbergerList>
       </HumbergerBar>
-      <UchueetButton isHidden={isOpen || viewProfile} onClick={() => setViewEditor(true)}/>
       <PlanetSatellites>
         <PlanetLeft isHidden={isOpen || viewProfile} />
         <PlanetRight isHidden={isOpen || viewProfile} />
       </PlanetSatellites>
-      {viewProfile && <Profile close={() => setViewProfile(false)}/>}
-      {viewEditor && <UchueetModal close={() => setViewEditor(false)}/>}
+      <UchueetButton
+        isHidden={isOpen || viewProfile}
+        onClick={() => setViewEditor(true)}
+      >
+        <UchueetIcon>
+          <Add fontSize="32px" color="rgba(51, 190, 255, 0.8)" />
+        </UchueetIcon>
+      </UchueetButton>
+      {viewProfile && <Profile close={() => setViewProfile(false)} />}
+      {viewEditor && <UchueetModal close={() => setViewEditor(false)} />}
     </>
   );
 };
