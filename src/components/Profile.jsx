@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Create from "react-ionicons/lib/MdCreate";
 import Close from "react-ionicons/lib/MdClose";
+import Trash from "react-ionicons/lib/IosTrashOutline";
 
 const ProfileDiv = styled.div`
   position: fixed;
@@ -11,7 +12,7 @@ const ProfileDiv = styled.div`
   width: 100vw;
   overflow: scroll;
   padding-top: 3%;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.7);
   z-index: 99;
 `;
 
@@ -77,41 +78,48 @@ const TweetCard = styled.div`
   background-color: rgba(18, 77, 174, ${(props) => props.opacity});
   padding: 16px 36px;
   &:hover {
-    box-shadow: 0px 0px 12px rgba(0, 255, 255, 0.75);
-    border: 1px solid rgba(127, 255, 255, 0.75);
+    box-shadow: 0px 0px 30px rgba(133, 255, 248, 0.75);
+    border: 1px solid rgba(133, 255, 248, 0.75);
   }
 `;
 
 const TweetText = styled.p`
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
   color: rgba(255, 255, 255, 0.75);
   text-shadow: 0 0 10px rgba(0, 255, 255, 0.95);
 `;
 
 const AuthorText = styled.p`
-  font-size: 16px;
+  font-size: 17px;
   color: rgba(127, 255, 255, 0.75);
   text-shadow: 0 0 10px rgba(0, 255, 255, 0.45);
 `;
 
 const DateSpan = styled.span`
-  font-size: 12px;
+  font-size: 14px;
   padding-left: 32px;
   color: rgba(127, 255, 255, 0.75);
+`;
+
+const TrashIconDiv = styled.div`
+  position: absolute;
+  top: 28px;
+  right: 48px;
+  }
 `;
 
 const Profile = (props) => {
   const [userName, setUserName] = useState("kubo-hide-kun");
   const [canEdit, setCanEdit] = useState(false);
-  const [isView, setIsView] = useState(true);
+
   return (
     <ProfileDiv>
       <CloseDiv>
         <Close
-        fontSize="48px"
-        color="rgba(127, 255, 255, 0.9)"
-        onClick={() => props.close()}
+          fontSize="48px"
+          color="rgba(127, 255, 255, 0.9)"
+          onClick={() => props.close()}
         />
       </CloseDiv>
       <DefaultDiv>
@@ -150,6 +158,14 @@ const Profile = (props) => {
             <TweetText>
               雪見だいふく、「一つ頂戴」と言わずに「半分頂戴」と自分の発言の罪深さを噛み締めながら分けてくれるように言ってほしい。
             </TweetText>
+            <TrashIconDiv>
+              <Trash
+                onClick={() => console.log("trash")}
+                fontSize="28px"
+                backgroundcolor="rgba(153,195,153,0.75)"
+                color="rgba(153, 195, 153, 0.75)"
+              />
+            </TrashIconDiv>
           </TweetCard>
         </DefaultDiv>
       ))}
