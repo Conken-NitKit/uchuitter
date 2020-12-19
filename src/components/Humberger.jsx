@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+import Profile from "./Profile";
+import UchueetModal from "./UchueetModal"
+
 const HumbergerList = styled.ul`
   margin-top: 50%;
 `;
@@ -24,36 +27,6 @@ const HumbergerContent = styled.li`
     color: rgba(255, 255, 255, 0.9);
     font-weight: bold;
     border-bottom: solid rgba(255, 255, 255, 0.5) 10px;
-  }
-  &:nth-child(1)::before {
-    
-    content: "1";
-    margin: 0 3px;
-  }
-  &:nth-child(2)::before {
-    
-    content: "2";
-    margin: 0 3px;
-  }
-  &:nth-child(3)::before {
-    
-    content: "3";
-    margin: 0 3px;
-  }
-  &:nth-child(4)::before {
-    content: "4";
-    margin: 0 3px;
-  }
-  &:nth-child(4) {
-    position: absolute;
-    bottom: 100px;
-    padding-right: 100%;
-    &:hover {
-      background-size: 100%;
-      color: rgba(255,255,0,0.8);
-      font-weight: bold;
-      border-bottom: solid rgba(204,204,0,0.5) 10px;
-    }
   }
 `;
 
@@ -93,7 +66,9 @@ const LineTop = styled.div`
   padding: 2px;
   border-radius: 20%;
   transition: 0.5s;
-  background-color: white;
+  background-color: rgba(
+    ${(props) => (props.isHidden ? "255, 255, 255, 0" : "255, 255, 255, 1")}
+  );
   transform: rotate(${(props) => (props.isOpen ? 45 : 0)}deg);
 
 
@@ -112,7 +87,7 @@ const LineMiddle = styled.div`
   transition: 0.3s all;
   visibility: ${(props) => (props.isOpen ? "hidden" : "visible")};
   background-color: rgba(
-    ${(props) => (props.isOpen ? "255, 255, 255, 0" : "255, 255, 255, 1")}
+    ${(props) => (props.isHidden ? "255, 255, 255, 0" : "255, 255, 255, 1")}
   );
 
 
@@ -129,28 +104,57 @@ const LineBottom = styled.div`
   padding: 2px;
   border-radius: 20%;
   transition: 0.5s;
-  background-color:white;
+  background-color: rgba(
+    ${(props) => (props.isHidden ? "255, 255, 255, 0" : "255, 255, 255, 1")}
+  );
   transform: rotate(${(props) => (props.isOpen ? -45 : 0)}deg);
 
 `;
 
-const Humberger = () => {
-  const [isOpen, setIsOpen] = useState(true);
+const UchuiteButton = styled.div`
+  position: fixed;
+  right: 32px;
+  bottom: 48px;
+  height: 64px;
+  width: 64px;
+  border-radius: 50%;
+  transition: 0.35s all;
+  background-color: rgba(
+    ${(props) => (props.isHidden ? "51, 190, 255, 0" : "51, 190, 255, 0.8")}
+  );
+`
+
+const Humberger = (props) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [viewProfile, setViewProfile] = useState(false);
+  const [viewEditor, setViewEditor] = useState(false);
+
   return (
     <>
       <HumbergerButton onClick={() => setIsOpen(!isOpen)}>
-        <LineTop isOpen={isOpen} />
-        <LineMiddle isOpen={isOpen} />
-        <LineBottom isOpen={isOpen} />
+        <LineTop isOpen={isOpen} isHidden={viewProfile}/>
+        <LineMiddle isHidden={isOpen || viewProfile} />
+        <LineBottom isOpen={isOpen} isHidden={viewProfile}/>
       </HumbergerButton>
-      <HumbergerBar isOpen={isOpen}>
+      <HumbergerBar isOpen={isOpen} >
         <HumbergerList>
-          <HumbergerContent>test1</HumbergerContent>
-          <HumbergerContent>test2</HumbergerContent>
-          <HumbergerContent>test3</HumbergerContent>
-          <HumbergerContent>test4</HumbergerContent>
+          <HumbergerContent onClick={() => {
+            setIsOpen(false);
+            setViewProfile(true);
+          }}>
+              プロフィール
+          </HumbergerContent>
+          <HumbergerContent onClick={() => console.log("ユーザー検索")}>
+              ユーザー検索
+          </HumbergerContent>
+          <HumbergerContent onClick={() => props.logout()}>
+              ログアウト
+          </HumbergerContent>
         </HumbergerList>
       </HumbergerBar>
+      <UchuiteButton isHidden={isOpen || viewProfile} onClick={() => setViewEditor(true)}/>
+      {viewProfile && <Profile close={() => setViewProfile(false)}/>}
+      {viewEditor && <UchueetModal close={() => setViewEditor(false)}/>}
     </>
   );
 };
