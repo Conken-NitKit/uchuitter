@@ -5,28 +5,40 @@ import Profile from "./Profile";
 import UchueetModal from "./UchueetModal"
 
 const HumbergerList = styled.ul`
-  margin-top: 150px;
+  margin-top: 50%;
 `;
 
 const HumbergerContent = styled.li`
-  font-size: 30px;
-  line-height: 30px;
+  cursor:pointer;
+  font-size: 20px;
+  line-height: 70%;
   color: white;
-  margin-top: 50px;
+  margin-top: 30%;
   list-style: none;
-  border-bottom: solid white 1px;
+  border-bottom: solid white 2px;
   padding: 5px;
+  background-color: none;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  &:hover {
+    background-size: 100%;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: bold;
+    border-bottom: solid rgba(255, 255, 255, 0.5) 10px;
+  }
 `;
 
 const HumbergerBar = styled.div`
   position: fixed;
   top: 0;
-  right: ${(props) => (props.isOpen ? "0" : "-320px")};
-  width: 300px;
+  right: ${(props) => (props.isOpen ? "0" : "-240px")};
+  width: 240px;
   height: 100vh;
   background: linear-gradient(
     90deg,
-    rgba(39, 39, 39, 0.8),
+    rgba(39, 39, 39, 0),
     rgba(41, 152, 204, 0.5),
     rgba(51, 190, 255, 0.6)
   );
@@ -35,10 +47,11 @@ const HumbergerBar = styled.div`
 
 const HumbergerButton = styled.div`
   position: fixed;
-  top: 48px;
+  top: 5%;
   right: 72px;
   z-index: 5;
-  background-color: white;
+  cursor:pointer;
+
 `;
 
 const LineTop = styled.div`
@@ -47,15 +60,18 @@ const LineTop = styled.div`
   content: "";
 
   transition: 0.3s;
-  width: 48px;
-  height: 10px;
+  width: 40px;
+  height: 1px;
   padding: 2px;
+  border-radius: 20%;
   transition: 0.5s;
   background-color: rgba(
     ${(props) => (props.isHidden ? "255, 255, 255, 0" : "255, 255, 255, 1")}
   );
   transform: rotate(${(props) => (props.isOpen ? 45 : 0)}deg);
-`;
+
+
+  `;
 
 const LineMiddle = styled.div`
   position: absolute;
@@ -63,14 +79,17 @@ const LineMiddle = styled.div`
   content: "";
 
   transition: 0.5s;
-  width: 48px;
-  height: 10px;
+  width: 40px;
+  height: 1px;
   padding: 2px;
+  border-radius: 20%;
   transition: 0.3s all;
   visibility: ${(props) => (props.isOpen ? "hidden" : "visible")};
   background-color: rgba(
     ${(props) => (props.isHidden ? "255, 255, 255, 0" : "255, 255, 255, 1")}
   );
+
+
 `;
 
 const LineBottom = styled.div`
@@ -79,14 +98,16 @@ const LineBottom = styled.div`
   content: "";
 
   transition: 0.3s;
-  width: 48px;
-  height: 10px;
+  width: 40px;
+  height: 1px;
   padding: 2px;
+  border-radius: 20%;
   transition: 0.5s;
   background-color: rgba(
     ${(props) => (props.isHidden ? "255, 255, 255, 0" : "255, 255, 255, 1")}
   );
   transform: rotate(${(props) => (props.isOpen ? -45 : 0)}deg);
+
 `;
 
 const UchuiteButton = styled.div`
@@ -122,8 +143,8 @@ const Humberger = (props) => {
           }}>
               プロフィール
           </HumbergerContent>
-          <HumbergerContent onClick={() => console.log("ユーザー検索")}>
-              ユーザー検索
+          <HumbergerContent onClick={() => console.log("コビルンルン")}>
+              ???
           </HumbergerContent>
           <HumbergerContent onClick={() => props.logout()}>
               ログアウト
