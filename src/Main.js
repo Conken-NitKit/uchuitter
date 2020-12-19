@@ -25,13 +25,15 @@ const StarDiv = styled.div`
   box-shadow: 0 0 4.5px lightblue;
 
 `
-//のcss情報
+//立方体のcss情報
 const CubeDiv = styled.div`
   height: 600px;
   width: 600px;
   border: 100px double rgba(127, 255, 255, 1);
   background-color: rgba(0, 255, 255, 0.5);
 `
+//スポンサーボタンのcss
+
 const radY =  Math.PI / 2;
 const radX =  Math.PI / 2; 
 class ThreeScene extends React.Component {
