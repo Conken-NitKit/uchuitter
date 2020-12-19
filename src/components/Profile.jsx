@@ -114,7 +114,9 @@ const Profile = (props) => {
 
   return (
     <ProfileDiv>
+      {/* プロフィール画面 */}
       <CloseDiv>
+        {/* プロフィール画面を閉じるボタン */}
         <Close
           fontSize="48px"
           color="rgba(127, 255, 255, 0.9)"
@@ -123,6 +125,7 @@ const Profile = (props) => {
       </CloseDiv>
       <DefaultDiv>
         <UserNameDiv>
+          {/* ユーザーネーム変更画面 */}
           <UserNameLabel for="name_input">ユーザーネーム</UserNameLabel>
           <UserNameInput
             id="name_input"
@@ -130,34 +133,43 @@ const Profile = (props) => {
             disabled={canEdit ? "" : "disabled"}
             onChange={(e) => canEdit && setUserName(e.target.value)}
           />
+          {/* ユーザーネーム編集をする */}
           <UserNameIcon>
+            {/* ユーザーネーム編集画面のボタン */}
             {canEdit ? (
               <Close
                 onClick={() => setCanEdit(false)}
                 fontSize="28px"
                 color="rgba(127, 255, 255, 0.75)"
-              />
+              /> /* ユーザーネーム編集終了ボタン */
             ) : (
               <Create
                 onClick={() => setCanEdit(true)}
                 fontSize="28px"
                 color="rgba(127, 255, 255, 0.75)"
-              />
+              /> /* ユーザーネーム編集開始ボタン */
             )}
           </UserNameIcon>
         </UserNameDiv>
       </DefaultDiv>
       {new Array(10).fill().map((_) => (
+        /* プロフィール画面に自分のツイートを表示する */
         <DefaultDiv>
           <TweetCard>
+            {/* ツイート */}
             <AuthorText>
+              {" "}
+              {/* ツイートしたユーザー */}
               kubo-hide-kun
               <DateSpan>12月9日</DateSpan>
+              {/* ツイートした日付 */}
             </AuthorText>
             <TweetText>
+              {/* ツイート本文 */}
               雪見だいふく、「一つ頂戴」と言わずに「半分頂戴」と自分の発言の罪深さを噛み締めながら分けてくれるように言ってほしい。
             </TweetText>
             <TrashIconDiv>
+              {/* ツイート削除ボタン */}
               <Trash
                 onClick={() => console.log("trash")}
                 fontSize="28px"
