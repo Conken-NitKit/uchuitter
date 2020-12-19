@@ -106,7 +106,6 @@ const TrashIconDiv = styled.div`
   position: absolute;
   top: 28px;
   right: 48px;
-  }
 `;
 
 const Profile = (props) => {
