@@ -6,6 +6,7 @@ const HumbergerList = styled.ul`
 `;
 
 const HumbergerContent = styled.li`
+  cursor:pointer;
   font-size: 30px;
   line-height: 70%;
   color: white;
@@ -13,34 +14,55 @@ const HumbergerContent = styled.li`
   list-style: none;
   border-bottom: solid white 2px;
   padding: 5px;
+  background-color: none;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  &:hover {
+    background-size: 100%;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: bold;
+    border-bottom: solid rgba(255, 255, 255, 0.5) 10px;
+  }
   &:nth-child(1)::before {
-    content:"1";
+    
+    content: "1";
     margin: 0 3px;
   }
-  &:nth-child(2)::before{
-    content:"2";
+  &:nth-child(2)::before {
+    
+    content: "2";
     margin: 0 3px;
   }
-  &:nth-child(3)::before{
-    content:"3";
+  &:nth-child(3)::before {
+    
+    content: "3";
     margin: 0 3px;
   }
-  &:nth-child(4)::before{
-    content:"4";
+  &:nth-child(4)::before {
+    content: "4";
     margin: 0 3px;
   }
-  &:nth-child(4){
-    position:absolute;
+  &:nth-child(4) {
+    position: absolute;
     bottom: 100px;
-    padding-right:100%;
+    padding-right: 100%;
+    &:hover {
+      background-size: 100%;
+      color: rgba(255,255,0,0.8);
+      font-weight: bold;
+      border-bottom: solid rgba(204,204,0,0.5) 10px;
+    }
   }
 `;
 
 const HumbergerBar = styled.div`
   position: fixed;
   top: 0;
-  right: ${(props) => (props.isOpen ? "0" : "-320px")};
+  right: ${(props) => (props.isOpen ? "0" : "-50%")};
   width: 50%;
+  max-width: 320px;
   height: 100vh;
   background: linear-gradient(
     90deg,
@@ -56,7 +78,8 @@ const HumbergerButton = styled.div`
   top: 5%;
   right: 72px;
   z-index: 5;
-  background-color: white;
+  cursor:pointer;
+
 `;
 
 const LineTop = styled.div`
@@ -68,11 +91,13 @@ const LineTop = styled.div`
   width: 40px;
   height: 1px;
   padding: 2px;
-  border-radius:20%;
+  border-radius: 20%;
   transition: 0.5s;
   background-color: white;
   transform: rotate(${(props) => (props.isOpen ? 45 : 0)}deg);
-`;
+
+
+  `;
 
 const LineMiddle = styled.div`
   position: absolute;
@@ -83,12 +108,14 @@ const LineMiddle = styled.div`
   width: 40px;
   height: 1px;
   padding: 2px;
-  border-radius:20%;
+  border-radius: 20%;
   transition: 0.3s all;
   visibility: ${(props) => (props.isOpen ? "hidden" : "visible")};
   background-color: rgba(
     ${(props) => (props.isOpen ? "255, 255, 255, 0" : "255, 255, 255, 1")}
   );
+
+
 `;
 
 const LineBottom = styled.div`
@@ -100,10 +127,11 @@ const LineBottom = styled.div`
   width: 40px;
   height: 1px;
   padding: 2px;
-  border-radius:20%;
+  border-radius: 20%;
   transition: 0.5s;
-  background-color: white;
+  background-color:white;
   transform: rotate(${(props) => (props.isOpen ? -45 : 0)}deg);
+
 `;
 
 const Humberger = () => {
@@ -121,7 +149,6 @@ const Humberger = () => {
           <HumbergerContent>test2</HumbergerContent>
           <HumbergerContent>test3</HumbergerContent>
           <HumbergerContent>test4</HumbergerContent>
-
         </HumbergerList>
       </HumbergerBar>
     </>
