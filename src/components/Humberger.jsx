@@ -104,11 +104,9 @@ const UchueetButton = styled.div`
   width: 64px;
   border-radius: 50%;
   border: 5px solid;
-  background-color: none;
+  background-color: rgb(37, 39, 41);
   transition: 0.35s all;
-  border-color: rgba(
-    ${(props) => (props.isHidden ? "51, 190, 255, 0" : "51, 190, 255, 0.8")}
-  );
+  border-color: rgb(51, 190, 255);
 `;
 
 const PlanetSatellites = styled.div`
@@ -129,12 +127,8 @@ const PlanetLeft = styled.div`
   border-radius: 50%;
   border: 5px solid;
   transition: 0.35s all;
-  border-color: rgba(
-    ${(props) => (props.isHidden ? "51, 190, 255, 0" : "51, 190, 255, 0.8")}
-  );
-  background-color: rgba(
-    ${(props) => (props.isHidden ? "255, 255, 255, 0" : "0, 0, 0, 0.8")}
-  );
+  border-color: rgb(51, 190, 255);
+  background: rgb(37, 39, 41);
 `;
 
 const PlanetRight = styled.div`
@@ -146,12 +140,8 @@ const PlanetRight = styled.div`
   border-radius: 50%;
   border: 5px solid;
   transition: 0.35s all;
-  border-color: rgba(
-    ${(props) => (props.isHidden ? "51, 190, 255, 0" : "51, 190, 255, 0.8")}
-  );
-  background-color: rgba(
-    ${(props) => (props.isHidden ? "255, 255, 255, 0" : "0, 0, 0, 0.8")}
-  );
+  border-color: rgb(51, 190, 255);
+  background: rgb(37, 39, 41);
 `;
 
 const UchueetIcon = styled.div`
@@ -190,14 +180,14 @@ const Humberger = (props) => {
           </HumbergerContent>
         </HumbergerList>
       </HumbergerBar>
-      <PlanetSatellites>
-        <PlanetLeft isHidden={isOpen || viewProfile} />
-        <PlanetRight isHidden={isOpen || viewProfile} />
-      </PlanetSatellites>
       <UchueetButton
         isHidden={isOpen || viewProfile}
         onClick={() => setViewEditor(true)}
       >
+        <PlanetSatellites>
+          <PlanetLeft isHidden={isOpen || viewProfile} />
+          <PlanetRight isHidden={isOpen || viewProfile} />
+        </PlanetSatellites>
         <UchueetIcon>
           <Add fontSize="32px" color="rgba(51, 190, 255, 0.8)" />
         </UchueetIcon>
