@@ -16,7 +16,7 @@ const HumbergerList = styled.ul`
 `;
 
 const HumbergerContent = styled.li`
-  cursor:pointer;
+  cursor: pointer;
   font-size: 20px;
   line-height: 70%;
   color: white;
@@ -57,8 +57,7 @@ const HumbergerButton = styled.div`
   top: 5%;
   right: 72px;
   z-index: 5;
-  cursor:pointer;
-
+  cursor: pointer;
 `;
 
 const LineTop = styled.div`
@@ -76,9 +75,7 @@ const LineTop = styled.div`
     ${(props) => (props.isHidden ? "255, 255, 255, 0" : "255, 255, 255, 1")}
   );
   transform: rotate(${(props) => (props.isOpen ? 45 : 0)}deg);
-
-
-  `;
+`;
 
 const LineMiddle = styled.div`
   position: absolute;
@@ -95,8 +92,6 @@ const LineMiddle = styled.div`
   background-color: rgba(
     ${(props) => (props.isHidden ? "255, 255, 255, 0" : "255, 255, 255, 1")}
   );
-
-
 `;
 
 const LineBottom = styled.div`
@@ -114,7 +109,6 @@ const LineBottom = styled.div`
     ${(props) => (props.isHidden ? "255, 255, 255, 0" : "255, 255, 255, 1")}
   );
   transform: rotate(${(props) => (props.isOpen ? -45 : 0)}deg);
-
 `;
 
 const UchueetButton = styled.div`
@@ -175,6 +169,13 @@ const Humberger = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [viewProfile, setViewProfile] = useState(false);
   const [viewEditor, setViewEditor] = useState(false);
+  /*
+  stateの宣言 上から
+  ハンバーガーメニューを出す
+  プロフィールを出す
+  うちゅいーと画面を出す
+  */
+  
 
   return (
     <>
@@ -194,7 +195,7 @@ const Humberger = (props) => {
             プロフィール
           </HumbergerContent>
           <HumbergerContent onClick={() => console.log("コビルンルン")}>
-              ???
+            ???
           </HumbergerContent>
           <HumbergerContent onClick={() => props.logout()}>
             ログアウト

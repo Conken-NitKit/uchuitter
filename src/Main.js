@@ -16,6 +16,7 @@ const Renderer = styled.div`
   width: 100vw;
   height: 100vh;
 `;
+
 //星のcss情報
 const StarDiv = styled.div`
   content: "";
@@ -25,13 +26,15 @@ const StarDiv = styled.div`
   background-color: ${(props) => props.color};
   box-shadow: 0 0 4.5px lightblue;
 `;
-//のcss情報
+
+//立方体のcss情報
 const CubeDiv = styled.div`
   height: 800px;
   width: 800px;
   border: 100px double rgba(127, 255, 255, 1);
   background-color: rgba(0, 255, 255, 0.5);
 `;
+
 class ThreeScene extends React.Component {
   constructor(props) {
     super(props);
@@ -218,14 +221,14 @@ class ThreeScene extends React.Component {
 }
 
 function createCSS3DObject(s) {
-  // 文字列をDOM要素に変換
-  var wrapper = document.createElement("div");
-  wrapper.innerHTML = s;
-  var div = wrapper.firstChild;
+	// 文字列をDOM要素に変換
+	var wrapper = document.createElement("div");
+	wrapper.innerHTML = s;
+	var div = wrapper.firstChild;
 
-  // DOM要素からCSSオブジェクトを生成する
-  var object = new CSS3DObject(div);
-  return object;
+	// DOM要素からCSSオブジェクトを生成する
+	var object = new CSS3DObject(div);
+	return object;
 }
 
 export default ThreeScene;
