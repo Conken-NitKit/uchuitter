@@ -29,11 +29,9 @@ const StarDiv = styled.div`
 const CubeDiv = styled.div`
   height: 600px;
   width: 600px;
-  border: 100px double rgba(127, 255, 255, 1);
-  background-color: rgba(0, 255, 255, 0.5);
+  border: 50px double rgba(127, 255, 255, 1);
+  background-color: rgba(0, 255, 255, 0.8);
 `
-//スポンサーボタンのcss
-
 const radY =  Math.PI / 2;
 const radX =  Math.PI / 2; 
 class ThreeScene extends React.Component {
@@ -53,18 +51,20 @@ class ThreeScene extends React.Component {
     this.renderer.domElement.style.top = 0;
 
     // カメラを指定座標に設置し、向きをシーンの中央に向ける
-    this.camera.position.x = 1000;
-    this.camera.position.y = 1000;
-    this.camera.position.z = 1000;
+    this.camera.position.x = 1100;
+    this.camera.position.y = 1100;
+    this.camera.position.z = 1100;
     this.camera.lookAt(new Vector3(0, 0, 500, true));
 
     // レンダラーの出力をhtml要素に追加する
     this.mount.appendChild(this.renderer.domElement);
 
-   //ツイート内容の配置 
-   const vector = new THREE.Vector3();
+    //ツイート内容の配置 
+    const vector = new THREE.Vector3();
+
     for ( let i = 0, l = 40; i < l; i ++ ) {
       // JSX要素を文字列(string)に変換
+      //const cssId = <TweetCard TweetId={i}/>
       const stringElement = renderToString(<TweetCard />);
 
       // 生成したstringをもとにCSS3DObjectを生成する
@@ -74,6 +74,10 @@ class ThreeScene extends React.Component {
       const theta = Math.sqrt( l * Math.PI ) * phi;
 
       cssElement.position.setFromSphericalCoords( 1000, phi, theta );
+
+      cssElement.element.addEventListener('click', (e) => {
+        console.log(i)
+      });
 
       vector.copy( cssElement.position ).multiplyScalar( 2 );
 
@@ -160,7 +164,7 @@ class ThreeScene extends React.Component {
     
     this.control = new TrackballControls(this.camera, this.renderer.domElement);
     this.control.minDistance = 550;
-    this.control.maxDistance = 1800;
+    this.control.maxDistance = 2000;
     this.control.addEventListener("change", this.render);
 
     this.start();
