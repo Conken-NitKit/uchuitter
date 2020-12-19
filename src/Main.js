@@ -37,6 +37,7 @@ class ThreeScene extends React.Component {
   constructor(props) {
     super(props);
     console.log(props);
+
   }
   componentDidMount() {
     const width = this.mount.clientWidth;
@@ -182,6 +183,15 @@ class ThreeScene extends React.Component {
     this.renderScene();
     this.frameId = window.requestAnimationFrame(this.animate);
     this.control.update();
+
+    // ログインしてないのであればログイン画面に遷移
+    const unSub = auth.onAuthStateChanged(async (user) => {
+      if (!user) {
+        console.log(user)
+        this.props.history.push("login");
+      }
+    })
+    unSub();
   };
   renderScene = () => {
     this.renderer.render(this.scene, this.camera);
