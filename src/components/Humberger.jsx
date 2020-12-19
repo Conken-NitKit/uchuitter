@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const PlanetRotate = keyframes`
+  to {
+    transform: rotate(1turn);
+  }
+`;
+
 
 const HumbergerList = styled.ul`
   margin-top: 150px;
@@ -82,16 +89,59 @@ const LineBottom = styled.div`
   transform: rotate(${(props) => (props.isOpen ? -45 : 0)}deg);
 `;
 
-const UchuiteButton = styled.div`
+const UchueetButton = styled.div`
   position: fixed;
   right: 32px;
   bottom: 48px;
   height: 64px;
   width: 64px;
   border-radius: 50%;
+  border: 5px solid;
+  background-color: none;
   transition: 0.35s all;
-  background-color: rgba(
+  border-color: rgba(
     ${(props) => (props.isOpen ? "51, 190, 255, 0" : "51, 190, 255, 0.8")}
+  );
+`
+
+const PlanetSatellites = styled.div`
+  position: fixed;
+  right: 32px;
+  bottom: 48px;
+  height: 64px;
+  width: 64px;
+  animation: ${PlanetRotate} 4s linear infinite;
+`;
+
+const PlanetLeft = styled.div`
+  position: absolute;
+  top: 21px;
+  left: -6px;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  border: 5px solid;
+  border-color: rgba(
+    ${(props) => (props.isOpen ? "51, 190, 255, 0" : "51, 190, 255, 0.8")}
+  );
+  background-color: rgba(
+    ${(props) => (props.isOpen ? "255, 255, 255, 0" : "0, 0, 0, 0.8")}
+  );
+`
+
+const PlanetRight = styled.div`
+  position: absolute;
+  top: 21px;
+  right: -6px;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  border: 5px solid;
+  border-color: rgba(
+    ${(props) => (props.isOpen ? "51, 190, 255, 0" : "51, 190, 255, 0.8")}
+  );
+  background-color: rgba(
+    ${(props) => (props.isOpen ? "255, 255, 255, 0" : "0, 0, 0, 0.8")}
   );
 `
 
@@ -117,7 +167,11 @@ const Humberger = () => {
           </HumbergerContent>
         </HumbergerList>
       </HumbergerBar>
-      <UchuiteButton isOpen={isOpen} onClick={() => console.log("うちゅいーと")}/>
+      <UchueetButton isOpen={isOpen} onClick={() => console.log("うちゅいーと")}/>
+      <PlanetSatellites>
+        <PlanetLeft isOpen={isOpen}/>
+        <PlanetRight isOpen={isOpen}/>
+      </PlanetSatellites>
     </>
   );
 };
