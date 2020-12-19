@@ -20,24 +20,44 @@ const Modal = styled.div`
   transform: translate(-50%, -50%);
   width: 80vw;
   max-width: 640px;
-  background-color: rgb(21, 32, 43);
+  background-color: rgba(9, 53, 61, 0.7);
+  box-shadow: 0px 0px 12px rgba(5, 109, 95, 0.75);
+  border: 1px solid rgba(31, 121, 109, 0.75);
 `;
 
+// 削除
 const ModalTitle = styled.p`
+  font-family: monospace;
+  font-size: 20px;
   color: white;
+  padding-top: 7px;
+  padding-left: 25px;
 `;
 
+// このページを削除しますか
 const ModalBody = styled.p`
+  font-family: monospace;
+  font-size: 20px;
   color: white;
-`;
-
-const ModalChoices = styled.div`
-  display: flex;
-  justify-content: flex-end;
+  padding-top: 10px;
+  padding-left: 25px;
 `;
 
 const ModalChoice = styled.p`
+  font-family: monospace;
+  font-size: 20px;
   color: white;
+  padding-bottom: 5px;
+  padding-right: 20px;
+`;
+
+const ModalChoices = styled.div`
+  font-family: monospace;
+  font-size: 20px;
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 5px;
+  padding-right: 15px;
 `;
 
 const TrashModal = (props) => {
@@ -47,8 +67,8 @@ const TrashModal = (props) => {
         <ModalTitle>削除</ModalTitle>
         <ModalBody>この投稿を削除しますか?</ModalBody>
         <ModalChoices>
-          <ModalChoice onClick={props.close}>いいえ</ModalChoice>
-          <ModalChoice onClick={props.close}>はい</ModalChoice>
+          <ModalChoice onClick={props.close}>OK</ModalChoice>
+          <ModalChoice onClick={props.close}>Cansel</ModalChoice>
         </ModalChoices>
       </Modal>
     </ModalBack>

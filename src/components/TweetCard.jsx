@@ -38,12 +38,13 @@ const DateSpan = styled.span`
 const Tweet = () => (
   <TweetCard opacity={Math.random() * 0.55 + 0.3}>
     <AuthorText>
-        kubo-hide-kun
-        <DateSpan>12月9日</DateSpan>
+      kubo-hide-kun
+      <DateSpan>12月9日</DateSpan>
     </AuthorText>
     <TweetText>
       雪見だいふく、「一つ頂戴」と言わずに「半分頂戴」と自分の発言の罪深さを噛み締めながら分けてくれるように言ってほしい。
     </TweetText>
   </TweetCard>
 );
+
 export default Tweet;
