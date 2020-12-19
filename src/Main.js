@@ -4,7 +4,7 @@ import { TrackballControls } from "three/examples/jsm/controls/TrackballControls
 import React from "react";
 import styled from "styled-components";
 import { renderToString } from "react-dom/server";
-import { auth } from "./firebase";
+import { db, auth } from "./firebase";
 
 import TweetCard from "./components/TweetCard";
 import Humberger from "./components/Humberger";
@@ -24,20 +24,19 @@ const StarDiv = styled.div`
   border-radius: 50%;
   background-color: ${(props) => props.color};
   box-shadow: 0 0 4.5px lightblue;
-
-`
+`;
 //のcss情報
 const CubeDiv = styled.div`
   height: 800px;
   width: 800px;
   border: 100px double rgba(127, 255, 255, 1);
   background-color: rgba(0, 255, 255, 0.5);
-`
+`;
 class ThreeScene extends React.Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
+  async componentDidMount() {
     const width = this.mount.clientWidth;
     const height = this.mount.clientHeight;
 
@@ -61,103 +60,102 @@ class ThreeScene extends React.Component {
     // レンダラーの出力をhtml要素に追加する
     this.mount.appendChild(this.renderer.domElement);
 
-   //ツイート内容の配置 
-   const vector = new THREE.Vector3();
-    for ( let i = 0, l = 60; i < l; i ++ ) {
+    const createdTimeLine = [];
+    const UchuitterRef = db.collection("uchuitter");
+    const vector = new THREE.Vector3();
+
+    await UchuitterRef.get().then((querySnapshot) => {
+      querySnapshot.forEach((docs) => {
+        createdTimeLine.push(...docs.data().tweets);
+      });
+      createdTimeLine.sort((a, b) => {
+        return a.createAt < b.createAt ? 1 : -1;
+      });
+    });
+
+    await createdTimeLine.forEach((tweet, i) => {
+      console.log(tweet);
       // JSX要素を文字列(string)に変換
       const stringElement = renderToString(<TweetCard />);
 
       // 生成したstringをもとにCSS3DObjectを生成する
       const cssElement = createCSS3DObject(stringElement);
 
-      const phi = Math.acos( - 1 + ( 2 * i ) / l );
-      const theta = Math.sqrt( l * Math.PI ) * phi;
+      const phi = Math.acos(-1 + (2 * i) / createdTimeLine.length);
+      const theta = Math.sqrt(createdTimeLine.length * Math.PI) * phi;
 
-      cssElement.position.setFromSphericalCoords( 1000, phi, theta );
+      cssElement.position.setFromSphericalCoords(1000, phi, theta);
 
-      vector.copy( cssElement.position ).multiplyScalar( 2 );
+      vector.copy(cssElement.position).multiplyScalar(2);
 
-      cssElement.lookAt( vector );
+      cssElement.lookAt(vector);
 
       // シーンに追加する
       this.scene.add(cssElement);
-		}
-    
+    });
+
     //コンテンツの表示
     const stringCube = renderToString(<CubeDiv />);
     const css3DCube = createCSS3DObject(stringCube);
 
-    css3DCube.position.set(
-      0,0,410
-    );
-    this.scene.add(css3DCube)
-    
+    css3DCube.position.set(0, 0, 410);
+    this.scene.add(css3DCube);
+
     const css3DCube2 = createCSS3DObject(stringCube);
-    css3DCube2.position.set(
-      0,0,-410
-    );
-    this.scene.add(css3DCube2)
+    css3DCube2.position.set(0, 0, -410);
+    this.scene.add(css3DCube2);
 
     const css3DCube3 = createCSS3DObject(stringCube);
     css3DCube3.rotation.y = Math.PI / 2;
-    css3DCube3.position.set(
-      410,0,0
-    );
-    this.scene.add(css3DCube3)
-    
+    css3DCube3.position.set(410, 0, 0);
+    this.scene.add(css3DCube3);
+
     const css3DCube4 = createCSS3DObject(stringCube);
     css3DCube4.rotation.y = Math.PI / 2;
-    css3DCube4.position.set(
-      -410,0,0
-    );
-    this.scene.add(css3DCube4)
+    css3DCube4.position.set(-410, 0, 0);
+    this.scene.add(css3DCube4);
 
     const css3DCube5 = createCSS3DObject(stringCube);
     css3DCube5.rotation.x = Math.PI / 2;
-    css3DCube5.position.set(
-      0,410,0
-    );
-    this.scene.add(css3DCube5)
+    css3DCube5.position.set(0, 410, 0);
+    this.scene.add(css3DCube5);
 
     const css3DCube6 = createCSS3DObject(stringCube);
     css3DCube6.rotation.x = Math.PI / 2;
-    css3DCube6.position.set(
-      0,-410,0
-    );
-    this.scene.add(css3DCube6)
-
+    css3DCube6.position.set(0, -410, 0);
+    this.scene.add(css3DCube6);
 
     //星背景の表示
-    for (let i = 0; i < 400; i++){
-      
+    for (let i = 0; i < 400; i++) {
       const x = Math.random() * 3000 - 1500;
       const y = Math.random() * 3000 - 1500;
       const z = Math.random() * 3000 - 1500;
 
-      const randomColor = ["lightskyblue", "lightgreen", "lightyellow","lightpink"];
-      const stringStar = renderToString(<StarDiv color={randomColor[Math.floor(Math.random()*4)]}/>);
+      const randomColor = [
+        "lightskyblue",
+        "lightgreen",
+        "lightyellow",
+        "lightpink",
+      ];
+      const stringStar = renderToString(
+        <StarDiv color={randomColor[Math.floor(Math.random() * 4)]} />
+      );
 
       const css3DStar = createCSS3DObject(stringStar);
-      css3DStar.position.set(
-       x,y,z
-      );
-      this.scene.add(css3DStar)
+      css3DStar.position.set(x, y, z);
+      this.scene.add(css3DStar);
 
       const css3DStarX = createCSS3DObject(stringStar);
       css3DStarX.rotation.x = Math.PI / 2;
-      css3DStarX.position.set(
-        x,y,z
-      )
-      this.scene.add(css3DStarX)
+      css3DStarX.position.set(x, y, z);
+      this.scene.add(css3DStarX);
 
       const css3DStarY = createCSS3DObject(stringStar);
       css3DStarY.rotation.y = Math.PI / 2;
-      css3DStarY.position.set(
-        x,y,z
-      )
-      this.scene.add(css3DStarY)
+      css3DStarY.position.set(x, y, z);
+      this.scene.add(css3DStarY);
     }
-    
+
     this.control = new TrackballControls(this.camera, this.renderer.domElement);
     this.control.minDistance = 550;
     this.control.maxDistance = 1800;
@@ -165,6 +163,7 @@ class ThreeScene extends React.Component {
 
     this.start();
   }
+
   componentWillUnmount() {
     this.stop();
     this.mount.removeChild(this.renderer.domElement);
@@ -185,10 +184,10 @@ class ThreeScene extends React.Component {
     // ログインしてないのであればログイン画面に遷移
     const unSub = auth.onAuthStateChanged(async (user) => {
       if (!user) {
-        console.log(user)
+        console.log(user);
         this.props.history.push("login");
       }
-    })
+    });
     unSub();
   };
   renderScene = () => {
