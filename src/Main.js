@@ -36,8 +36,6 @@ const CubeDiv = styled.div`
 class ThreeScene extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
-
   }
   componentDidMount() {
     const width = this.mount.clientWidth;
