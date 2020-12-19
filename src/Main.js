@@ -27,11 +27,13 @@ const StarDiv = styled.div`
 `
 //のcss情報
 const CubeDiv = styled.div`
-  height: 800px;
-  width: 800px;
+  height: 600px;
+  width: 600px;
   border: 100px double rgba(127, 255, 255, 1);
   background-color: rgba(0, 255, 255, 0.5);
 `
+const radY =  Math.PI / 2;
+const radX =  Math.PI / 2; 
 class ThreeScene extends React.Component {
   componentDidMount() {
     const width = this.mount.clientWidth;
@@ -59,7 +61,7 @@ class ThreeScene extends React.Component {
 
    //ツイート内容の配置 
    const vector = new THREE.Vector3();
-    for ( let i = 0, l = 115; i < l; i ++ ) {
+    for ( let i = 0, l = 40; i < l; i ++ ) {
       // JSX要素を文字列(string)に変換
       const stringElement = renderToString(<TweetCard />);
 
@@ -84,41 +86,41 @@ class ThreeScene extends React.Component {
     const css3DCube = createCSS3DObject(stringCube);
 
     css3DCube.position.set(
-      0,0,410
+      0,0,310
     );
     this.scene.add(css3DCube)
     
     const css3DCube2 = createCSS3DObject(stringCube);
     css3DCube2.position.set(
-      0,0,-410
+      0,0,-310
     );
     this.scene.add(css3DCube2)
 
     const css3DCube3 = createCSS3DObject(stringCube);
-    css3DCube3.rotation.y = Math.PI / 2;
+    css3DCube3.rotation.y = radY;
     css3DCube3.position.set(
-      410,0,0
+      310,0,0
     );
     this.scene.add(css3DCube3)
     
     const css3DCube4 = createCSS3DObject(stringCube);
-    css3DCube4.rotation.y = Math.PI / 2;
+    css3DCube4.rotation.y = radY;
     css3DCube4.position.set(
-      -410,0,0
+      -310,0,0
     );
     this.scene.add(css3DCube4)
 
     const css3DCube5 = createCSS3DObject(stringCube);
-    css3DCube5.rotation.x = Math.PI / 2;
+    css3DCube5.rotation.x = radX;
     css3DCube5.position.set(
-      0,410,0
+      0,310,0
     );
     this.scene.add(css3DCube5)
 
     const css3DCube6 = createCSS3DObject(stringCube);
-    css3DCube6.rotation.x = Math.PI / 2;
+    css3DCube6.rotation.x = radX;
     css3DCube6.position.set(
-      0,-410,0
+      0,-310,0
     );
     this.scene.add(css3DCube6)
 
@@ -173,6 +175,7 @@ class ThreeScene extends React.Component {
   stop = () => {
     cancelAnimationFrame(this.frameId);
   };
+  //1フレームごとの変化
   animate = () => {
     this.renderScene();
     this.frameId = window.requestAnimationFrame(this.animate);
