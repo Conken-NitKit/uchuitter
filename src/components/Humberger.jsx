@@ -10,7 +10,7 @@ const HumbergerList = styled.ul`
 
 const HumbergerContent = styled.li`
   cursor:pointer;
-  font-size: 30px;
+  font-size: 20px;
   line-height: 70%;
   color: white;
   margin-top: 30%;
@@ -33,9 +33,8 @@ const HumbergerContent = styled.li`
 const HumbergerBar = styled.div`
   position: fixed;
   top: 0;
-  right: ${(props) => (props.isOpen ? "0" : "-50%")};
-  width: 50%;
-  max-width: 320px;
+  right: ${(props) => (props.isOpen ? "0" : "-240px")};
+  width: 240px;
   height: 100vh;
   background: linear-gradient(
     90deg,
@@ -144,8 +143,8 @@ const Humberger = (props) => {
           }}>
               プロフィール
           </HumbergerContent>
-          <HumbergerContent onClick={() => console.log("ユーザー検索")}>
-              ユーザー検索
+          <HumbergerContent onClick={() => console.log("コビルンルン")}>
+              ???
           </HumbergerContent>
           <HumbergerContent onClick={() => props.logout()}>
               ログアウト
