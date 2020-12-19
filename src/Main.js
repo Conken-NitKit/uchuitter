@@ -20,8 +20,8 @@ const Renderer = styled.div`
 //星のcss情報
 const StarDiv = styled.div`
   content: "";
-  height: 10px;
-  width: 10px;
+  height: 5px;
+  width: 5px;
   border-radius: 50%;
   background-color: ${(props) => props.color};
   box-shadow: 0 0 4.5px lightblue;
@@ -39,6 +39,7 @@ class ThreeScene extends React.Component {
   constructor(props) {
     super(props);
   }
+
   async componentDidMount() {
     const width = this.mount.clientWidth;
     const height = this.mount.clientHeight;
@@ -55,9 +56,9 @@ class ThreeScene extends React.Component {
     this.renderer.domElement.style.top = 0;
 
     // カメラを指定座標に設置し、向きをシーンの中央に向ける
-    this.camera.position.x = 1000;
-    this.camera.position.y = 1000;
-    this.camera.position.z = 1000;
+    this.camera.position.x = 1100;
+    this.camera.position.y = 1100;
+    this.camera.position.z = 1100;
     this.camera.lookAt(new Vector3(0, 0, 500, true));
 
     // レンダラーの出力をhtml要素に追加する
@@ -76,11 +77,21 @@ class ThreeScene extends React.Component {
       });
     });
 
+    console.log(createdTimeLine);
+
     await createdTimeLine.forEach((tweet, i) => {
       console.log(tweet);
       // JSX要素を文字列(string)に変換
-      const stringElement = renderToString(<TweetCard />);
+      //const cssId = <TweetCard TweetId={i}/>
+      const stringElement = renderToString(
+        <TweetCard
+          autherId={tweet.autherId}
+          content={tweet.content}
+          createAt={tweet.createAt}
+        />
+      );
 
+      console.log(stringElement);
       // 生成したstringをもとにCSS3DObjectを生成する
       const cssElement = createCSS3DObject(stringElement);
 
@@ -88,6 +99,10 @@ class ThreeScene extends React.Component {
       const theta = Math.sqrt(createdTimeLine.length * Math.PI) * phi;
 
       cssElement.position.setFromSphericalCoords(1000, phi, theta);
+
+      cssElement.element.addEventListener("click", (e) => {
+        console.log(tweet.tweetId);
+      });
 
       vector.copy(cssElement.position).multiplyScalar(2);
 
@@ -161,7 +176,7 @@ class ThreeScene extends React.Component {
 
     this.control = new TrackballControls(this.camera, this.renderer.domElement);
     this.control.minDistance = 550;
-    this.control.maxDistance = 1800;
+    this.control.maxDistance = 2000;
     this.control.addEventListener("change", this.render);
 
     this.start();
@@ -179,6 +194,7 @@ class ThreeScene extends React.Component {
   stop = () => {
     cancelAnimationFrame(this.frameId);
   };
+  //1フレームごとの変化
   animate = () => {
     this.renderScene();
     this.frameId = window.requestAnimationFrame(this.animate);
@@ -205,30 +221,21 @@ class ThreeScene extends React.Component {
             this.mount = mount;
           }}
         />
-        <Humberger
-          logout={async () => {
-            try {
-              await auth.signOut();
-              this.props.history.push("login");
-            } catch (error) {
-              alert(error.message);
-            }
-          }}
-        />
+        <Humberger />
       </>
     );
   }
 }
 
 function createCSS3DObject(s) {
-	// 文字列をDOM要素に変換
-	var wrapper = document.createElement("div");
-	wrapper.innerHTML = s;
-	var div = wrapper.firstChild;
+  // 文字列をDOM要素に変換
+  var wrapper = document.createElement("div");
+  wrapper.innerHTML = s;
+  var div = wrapper.firstChild;
 
-	// DOM要素からCSSオブジェクトを生成する
-	var object = new CSS3DObject(div);
-	return object;
+  // DOM要素からCSSオブジェクトを生成する
+  var object = new CSS3DObject(div);
+  return object;
 }
 
 export default ThreeScene;
