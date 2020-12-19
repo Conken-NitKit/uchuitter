@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import Profile from "./Profile";
-import UchueetModal from "./UchueetModal"
+import UchueetModal from "./UchueetModal";
 
 const HumbergerList = styled.ul`
   margin-top: 50%;
 `;
 
 const HumbergerContent = styled.li`
-  cursor:pointer;
+  cursor: pointer;
   font-size: 20px;
   line-height: 70%;
   color: white;
@@ -50,8 +50,7 @@ const HumbergerButton = styled.div`
   top: 5%;
   right: 72px;
   z-index: 5;
-  cursor:pointer;
-
+  cursor: pointer;
 `;
 
 const LineTop = styled.div`
@@ -69,9 +68,7 @@ const LineTop = styled.div`
     ${(props) => (props.isHidden ? "255, 255, 255, 0" : "255, 255, 255, 1")}
   );
   transform: rotate(${(props) => (props.isOpen ? 45 : 0)}deg);
-
-
-  `;
+`;
 
 const LineMiddle = styled.div`
   position: absolute;
@@ -88,8 +85,6 @@ const LineMiddle = styled.div`
   background-color: rgba(
     ${(props) => (props.isHidden ? "255, 255, 255, 0" : "255, 255, 255, 1")}
   );
-
-
 `;
 
 const LineBottom = styled.div`
@@ -107,7 +102,6 @@ const LineBottom = styled.div`
     ${(props) => (props.isHidden ? "255, 255, 255, 0" : "255, 255, 255, 1")}
   );
   transform: rotate(${(props) => (props.isOpen ? -45 : 0)}deg);
-
 `;
 
 const UchuiteButton = styled.div`
@@ -121,39 +115,62 @@ const UchuiteButton = styled.div`
   background-color: rgba(
     ${(props) => (props.isHidden ? "51, 190, 255, 0" : "51, 190, 255, 0.8")}
   );
-`
+`;
 
 const Humberger = (props) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);{
   const [viewProfile, setViewProfile] = useState(false);
   const [viewEditor, setViewEditor] = useState(false);
+  /*
+  stateの宣言 上から
+  ハンバーガーメニューを出す
+  プロフィールを出す
+  うちゅいーと画面を出す
+  */
+  
 
   return (
     <>
       <HumbergerButton onClick={() => setIsOpen(!isOpen)}>
-        <LineTop isOpen={isOpen} isHidden={viewProfile}/>
+        {/*ハンバーガーメニューが出る*/}
+        <LineTop isOpen={isOpen} isHidden={viewProfile} />
+        {/*ハンバーガーメニューが出るボタンのアイコン（上の棒）*/}
         <LineMiddle isHidden={isOpen || viewProfile} />
-        <LineBottom isOpen={isOpen} isHidden={viewProfile}/>
+        {/*ハンバーガーメニューが出るボタンのアイコン (真ん中の棒)*/}
+        <LineBottom isOpen={isOpen} isHidden={viewProfile} />
+        {/*ハンバーガーメニューが出るボタンのアイコン (下の棒)*/}
       </HumbergerButton>
-      <HumbergerBar isOpen={isOpen} >
+      <HumbergerBar isOpen={isOpen}>
+        {/*HumbergerButtonがクリックされると出てくるハンバーガーメニューの背景*/}
         <HumbergerList>
-          <HumbergerContent onClick={() => {
-            setIsOpen(false);
-            setViewProfile(true);
-          }}>
-              プロフィール
+          <HumbergerContent
+            onClick={() => {
+              setIsOpen(false);
+              setViewProfile(true);
+            }}
+          >
+            プロフィール
+            {/*クリックしたらプロフィール画面が出てハンバーガーメニューが消える*/}
           </HumbergerContent>
           <HumbergerContent onClick={() => console.log("コビルンルン")}>
-              ???
+            ???
+            {/*クリックしたらコビルンルン*/}
           </HumbergerContent>
           <HumbergerContent onClick={() => props.logout()}>
-              ログアウト
+            ログアウト
+            {/*クリックしたらログイン、登録画面に移動*/}
           </HumbergerContent>
         </HumbergerList>
       </HumbergerBar>
-      <UchuiteButton isHidden={isOpen || viewProfile} onClick={() => setViewEditor(true)}/>
-      {viewProfile && <Profile close={() => setViewProfile(false)}/>}
-      {viewEditor && <UchueetModal close={() => setViewEditor(false)}/>}
+      <UchuiteButton
+        isHidden={isOpen || viewProfile}
+        onClick={() => setViewEditor(true)}
+      />
+      {/*うちゅいーと画面*/}
+      {viewProfile && <Profile close={() => setViewProfile(false)} />}
+      {/*プロフィールを閉じるボタン*/}
+      {viewEditor && <UchueetModal close={() => setViewEditor(false)} />}
+      {/*うちゅいーとを閉じるボタン*/}
     </>
   );
 };
