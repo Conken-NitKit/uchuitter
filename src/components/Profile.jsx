@@ -147,7 +147,7 @@ const Profile = (props) => {
     return () => {
       unSub();
     };
-  }, [userName]);
+  }, [userName]); // eslint-disable-next-line
 
   return (
     <ProfileDiv>

@@ -138,6 +138,15 @@ const UchueetModal = (props) => {
                 "ﾀﾋね",
                 "ころす",
                 "きしょい",
+                "バカ",
+                "馬鹿",
+                "死ね",
+                "アホ",
+                "気持ち悪い",
+                "キモい",
+                "ハゲ",
+                "チビ",
+                "デブ",
               ];
               for (let i = 0; i < ngWord.length; i++) {
                 const result = tweetText.indexOf(ngWord[i]);
