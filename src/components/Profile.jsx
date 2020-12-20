@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Create from "react-ionicons/lib/MdCreate";
 import Close from "react-ionicons/lib/MdClose";
 import Trash from "react-ionicons/lib/IosTrashOutline";
 
 import TrashModal from "./TrashModal";
+import { db, auth } from "../firebase";
 
 const ProfileDiv = styled.div`
   position: fixed;
@@ -54,7 +55,7 @@ const UserNameLabel = styled.label`
 
 const UserNameInput = styled.input`
   width: 100%;
-  font-size: 28px;
+  font-size: 18px;
   color: rgba(255, 255, 255, 0.75);
   font-weight: bold;
   text-shadow: 0 0 10px rgba(0, 255, 255, 0.95);
@@ -98,22 +99,55 @@ const AuthorText = styled.p`
   text-shadow: 0 0 10px rgba(0, 255, 255, 0.45);
 `;
 
-const DateSpan = styled.span`
-  font-size: 14px;
-  padding-left: 32px;
-  color: rgba(127, 255, 255, 0.75);
-`;
-
 const TrashIconDiv = styled.div`
   position: absolute;
-  top: 28px;
+  top: 30px;
   right: 48px;
 `;
 
 const Profile = (props) => {
-  const [userName, setUserName] = useState("kubo-hide-kun");
+  const [userName, setUserName] = useState("");
   const [canEdit, setCanEdit] = useState(false);
   const [canTrash, setCanTrash] = useState(false);
+
+  const [account, setAccount] = useState(null);
+
+  useEffect(() => {
+    const unSub = auth.onAuthStateChanged(async (user) => {
+      const uchuitterRef = user && db.collection("uchuitter").doc(user.uid);
+      if (user) {
+        await uchuitterRef
+          .get()
+          .then((doc) => !account && setAccount(doc.data()))
+          .catch((err) => console.log("Error getting documents", err));
+        await uchuitterRef
+          .get()
+          .then((doc) => !account && setUserName(doc.data().displayName))
+          .catch((err) => console.log("Error getting documents", err));
+      } else {
+        props.history.push("login");
+      }
+    });
+    return () => {
+      unSub();
+    };
+  });
+
+  useEffect(() => {
+    if (userName === "") return;
+    const unSub = auth.onAuthStateChanged(async (user) => {
+      const uchuitterRef = user && db.collection("uchuitter").doc(user.uid);
+      if (user) {
+        const postData = account;
+        uchuitterRef.set({ ...postData, displayName: userName });
+      } else {
+        props.history.push("login");
+      }
+    });
+    return () => {
+      unSub();
+    };
+  }, [userName]);
 
   return (
     <ProfileDiv>
@@ -155,34 +189,24 @@ const Profile = (props) => {
           </UserNameIcon>
         </UserNameDiv>
       </DefaultDiv>
-      {new Array(10).fill().map((_) => (
-        /* プロフィール画面に自分のツイートを表示する */
-        <DefaultDiv>
-          <TweetCard>
-            {/* ツイート */}
-            <AuthorText>
-              {" "}
-              {/* ツイートしたユーザー */}
-              kubo-hide-kun
-              <DateSpan>12月9日</DateSpan>
-              {/* ツイートした日付 */}
-            </AuthorText>
-            <TweetText>
-              {/* ツイート本文 */}
-              雪見だいふく、「一つ頂戴」と言わずに「半分頂戴」と自分の発言の罪深さを噛み締めながら分けてくれるように言ってほしい。
-            </TweetText>
-            <TrashIconDiv>
-              {/* ツイート削除ボタン */}
-              <Trash
-                onClick={() => setCanTrash(true)}
-                fontSize="28px"
-                backgroundcolor="rgba(153,195,153,0.75)"
-                color="rgba(153, 195, 153, 0.75)"
-              />
-            </TrashIconDiv>
-          </TweetCard>
-        </DefaultDiv>
-      ))}
+      {account !== null &&
+        account.tweets.map((tweet) => (
+          /* プロフィール画面に自分のツイートを表示する */
+          <DefaultDiv>
+            <TweetCard>
+              <AuthorText>{account.displayName}</AuthorText>
+              <TweetText>{tweet.content}</TweetText>
+              <TrashIconDiv>
+                <Trash
+                  onClick={() => setCanTrash(true)}
+                  fontSize="28px"
+                  backgroundcolor="rgba(153,195,153,0.75)"
+                  color="rgba(153, 195, 153, 0.75)"
+                />
+              </TrashIconDiv>
+            </TweetCard>
+          </DefaultDiv>
+        ))}
       {canTrash && <TrashModal close={() => setCanTrash(false)} />}
     </ProfileDiv>
   );
