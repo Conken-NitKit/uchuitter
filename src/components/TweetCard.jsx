@@ -40,18 +40,15 @@ const DateText = styled.p`
   bottom: 0;
 `;
 
-const Tweet = (props) => (
-  <TweetCard opacity={Math.random() * 0.55 + 0.3}>
-    <AuthorText>
-      {props.autherId}
-    </AuthorText>
-    <TweetText>
-      {props.content}
-    </TweetText>
-    <DateText>
-      {/* {new Date(props.createAt)} */}
-    </DateText>
-  </TweetCard>
-);
+
+const Tweet = (props) => {
+  return (
+    <TweetCard opacity={Math.random() * 0.55 + 0.3}>
+      <AuthorText>{props.autherName}</AuthorText>
+      <TweetText>{props.content}</TweetText>
+      <DateText>{/* {new Date(props.createAt)} */}</DateText>
+    </TweetCard>
+  );
+};
 
 export default Tweet;
