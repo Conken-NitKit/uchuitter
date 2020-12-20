@@ -36,10 +36,6 @@ const CubeDiv = styled.div`
 `;
 
 class ThreeScene extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   async componentDidMount() {
     const width = this.mount.clientWidth;
     const height = this.mount.clientHeight;
@@ -221,7 +217,16 @@ class ThreeScene extends React.Component {
             this.mount = mount;
           }}
         />
-        <Humberger />
+        <Humberger
+          logout={async () => {
+            try {
+              await auth.signOut();
+              this.props.history.push("login");
+            } catch (error) {
+              alert(error.message);
+            }
+          }}
+        />
       </>
     );
   }

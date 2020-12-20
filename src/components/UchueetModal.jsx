@@ -3,9 +3,6 @@ import styled from "styled-components";
 import { db, auth } from "../firebase";
 import generateUuid from "../functions/generateUuid";
 import Close from "react-ionicons/lib/MdClose";
-import { BasicDepthPacking } from "three";
-import { DH_CHECK_P_NOT_PRIME } from "constants";
-import { reduceEachLeadingCommentRange } from "typescript";
 import PopupAttention from "./PopupAttention";
 
 const ModalBack = styled.div`
@@ -82,15 +79,6 @@ const UchueetButton = styled.button`
   margin: 6px 8px;
   background-color: rgb(29, 161, 242);
 `;
-
-const Dialog = styled.p`
-  font-family: monospace;
-  font-size: 20px;
-  color: white;
-  padding-top: 10px;
-  padding-left: 25px;
-`;
-
 
 const UchueetModal = (props) => {
   const [account, setAccount] = useState(null);
