@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Create from "react-ionicons/lib/MdCreate";
 import Close from "react-ionicons/lib/MdClose";
+import Trash from "react-ionicons/lib/IosTrashOutline";
+
+import TrashModal from "./TrashModal";
+import { db, auth } from "../firebase";
 
 const ProfileDiv = styled.div`
   position: fixed;
@@ -11,7 +15,7 @@ const ProfileDiv = styled.div`
   width: 100vw;
   overflow: scroll;
   padding-top: 3%;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.7);
   z-index: 99;
 `;
 
@@ -51,7 +55,7 @@ const UserNameLabel = styled.label`
 
 const UserNameInput = styled.input`
   width: 100%;
-  font-size: 28px;
+  font-size: 18px;
   color: rgba(255, 255, 255, 0.75);
   font-weight: bold;
   text-shadow: 0 0 10px rgba(0, 255, 255, 0.95);
@@ -77,45 +81,88 @@ const TweetCard = styled.div`
   background-color: rgba(18, 77, 174, ${(props) => props.opacity});
   padding: 16px 36px;
   &:hover {
-    box-shadow: 0px 0px 12px rgba(0, 255, 255, 0.75);
-    border: 1px solid rgba(127, 255, 255, 0.75);
+    box-shadow: 0px 0px 30px rgba(133, 255, 248, 0.75);
+    border: 1px solid rgba(133, 255, 248, 0.75);
   }
 `;
 
 const TweetText = styled.p`
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
   color: rgba(255, 255, 255, 0.75);
   text-shadow: 0 0 10px rgba(0, 255, 255, 0.95);
 `;
 
 const AuthorText = styled.p`
-  font-size: 16px;
+  font-size: 17px;
   color: rgba(127, 255, 255, 0.75);
   text-shadow: 0 0 10px rgba(0, 255, 255, 0.45);
 `;
 
-const DateSpan = styled.span`
-  font-size: 12px;
-  padding-left: 32px;
-  color: rgba(127, 255, 255, 0.75);
+const TrashIconDiv = styled.div`
+  position: absolute;
+  top: 30px;
+  right: 48px;
 `;
 
 const Profile = (props) => {
-  const [userName, setUserName] = useState("kubo-hide-kun");
+  const [userName, setUserName] = useState("");
   const [canEdit, setCanEdit] = useState(false);
+  const [canTrash, setCanTrash] = useState("");
+
+  const [account, setAccount] = useState(null);
+
+  useEffect(() => {
+    const unSub = auth.onAuthStateChanged(async (user) => {
+      const uchuitterRef = user && db.collection("uchuitter").doc(user.uid);
+      if (user) {
+        await uchuitterRef
+          .get()
+          .then((doc) => !account && setAccount(doc.data()))
+          .catch((err) => console.log("Error getting documents", err));
+        await uchuitterRef
+          .get()
+          .then((doc) => !account && setUserName(doc.data().displayName))
+          .catch((err) => console.log("Error getting documents", err));
+      } else {
+        props.history.push("login");
+      }
+    });
+    return () => {
+      unSub();
+    };
+  });
+
+  useEffect(() => {
+    if (userName === "") return;
+    const unSub = auth.onAuthStateChanged(async (user) => {
+      const uchuitterRef = user && db.collection("uchuitter").doc(user.uid);
+      if (user) {
+        const postData = account;
+        uchuitterRef.set({ ...postData, displayName: userName });
+      } else {
+        props.history.push("login");
+      }
+    });
+    return () => {
+      unSub();
+    };
+  }, [userName]); // eslint-disable-next-line
 
   return (
     <ProfileDiv>
+      {/* プロフィール画面 */}
       <CloseDiv>
+        {/* プロフィール画面を閉じるボタン */}
         <Close
-        fontSize="48px"
-        color="rgba(127, 255, 255, 0.9)"
-        onClick={() => props.close()}
+          fontSize="48px"
+          color="rgba(127, 255, 255, 0.9)"
+          onClick={() => props.close()}
         />
       </CloseDiv>
       <DefaultDiv>
         <UserNameDiv>
+          {/* ユーザーネーム変更画面 */}
           <UserNameLabel for="name_input">ユーザーネーム</UserNameLabel>
           <UserNameInput
             id="name_input"
@@ -123,36 +170,67 @@ const Profile = (props) => {
             disabled={canEdit ? "" : "disabled"}
             onChange={(e) => canEdit && setUserName(e.target.value)}
           />
+          {/* ユーザーネーム編集をする */}
           <UserNameIcon>
+            {/* ユーザーネーム編集画面のボタン */}
             {canEdit ? (
               <Close
                 onClick={() => setCanEdit(false)}
                 fontSize="28px"
                 color="rgba(127, 255, 255, 0.75)"
-              />
+              /> /* ユーザーネーム編集終了ボタン */
             ) : (
               <Create
                 onClick={() => setCanEdit(true)}
                 fontSize="28px"
                 color="rgba(127, 255, 255, 0.75)"
-              />
+              /> /* ユーザーネーム編集開始ボタン */
             )}
           </UserNameIcon>
         </UserNameDiv>
       </DefaultDiv>
-      {new Array(10).fill().map((_) => (
-        <DefaultDiv>
-          <TweetCard>
-            <AuthorText>
-              kubo-hide-kun
-              <DateSpan>12月9日</DateSpan>
-            </AuthorText>
-            <TweetText>
-              雪見だいふく、「一つ頂戴」と言わずに「半分頂戴」と自分の発言の罪深さを噛み締めながら分けてくれるように言ってほしい。
-            </TweetText>
-          </TweetCard>
-        </DefaultDiv>
-      ))}
+      {account !== null &&
+        account.tweets.map((tweet) => (
+          /* プロフィール画面に自分のツイートを表示する */
+          <DefaultDiv>
+            <TweetCard>
+              <AuthorText>{account.displayName}</AuthorText>
+              <TweetText>{tweet.content}</TweetText>
+              <TrashIconDiv>
+                <Trash
+                  onClick={() => setCanTrash(tweet.tweetId)}
+                  fontSize="28px"
+                  backgroundcolor="rgba(153,195,153,0.75)"
+                  color="rgba(153, 195, 153, 0.75)"
+                />
+              </TrashIconDiv>
+            </TweetCard>
+          </DefaultDiv>
+        ))}
+      {canTrash !== "" && (
+        <TrashModal
+          remove={() => {
+            const unSub = auth.onAuthStateChanged(async (user) => {
+              const uchuitterRef =
+                user && db.collection("uchuitter").doc(user.uid);
+              if (user) {
+                const postData = account;
+                const newTweets = account.tweets.filter(
+                  (pastTweet) => pastTweet.tweetId !== canTrash
+                );
+                setAccount({...postData, tweet: newTweets});
+                await uchuitterRef.set({ ...postData, tweets: newTweets });
+                props.close();
+              } else {
+                props.history.push("login");
+              }
+            });
+            unSub();
+            setCanTrash("");
+          }}
+          close={() => setCanTrash("")}
+        />
+      )}
     </ProfileDiv>
   );
 };

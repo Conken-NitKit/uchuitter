@@ -5,6 +5,7 @@ import createUser from "../functions/createUser";
 import { pc, sp, tab } from "../functions/media";
 import { auth } from "../firebase";
 
+// タイトル
 const TitleText = styled.h1`
   ${pc`
     margin-top: 12%;
@@ -44,40 +45,47 @@ const Buttons = styled.div`
   `}
 `;
 
+// ログイン
 const Button = styled.button`
-  color: ${(props) => (props.isSelected ? "#fff" : "#3acbec")};
+  color: ${(props) =>
+    props.isSelected ? "skyblue" : "rgba(147, 229, 223, 0.7)"};
   font-size: 15px;
+  font-weight: bold;
   width: 180px;
   margin: 10px 30px;
   outline: none;
   text-align: center;
   font-weight: 500;
-  border: 1px solid #3acbec;
+  border: 1px solid rgba(147, 229, 223, 0.7);
   padding: 14px 0;
-  border-radius: 6px;
+  /* border-radius: 6px; */
   transition: 0.3s linear;
   pointer-events: all;
-  background-color: ${(props) => (props.isSelected ? "#3acbec" : "#00000000")};
+  background-color: ${(props) =>
+    props.isSelected ? "#00000000" : "#00000000"};
   &:hover {
-    background-color: #3acbec;
-    color: #fff;
+    background-color: rgba(147, 229, 223, 0.7);
+    box-shadow: 0px 0px 16px skyblue;
+    color: white;
   }
   &:active {
-    box-shadow: 0 0 9px rgba(255, 255, 255, 0.6);
-    text-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 9px rgba(147, 229, 223, 0.7);
+    text-shadow: 0 0 12px rgba(147, 229, 223, 0.7);
   }
 `;
 
+// 入力するところ
 const FormBox = styled.div`
+  font-weight: bold;
   position: relative;
   width: 420px;
   height: 40px;
   background: #f1f1f1b3;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   margin: 20px auto 0;
   pointer-events: none;
   &:active {
-    box-shadow: 0 0 12px rgba(255, 254, 59, 0.2);
+    box-shadow: 0 0 12px rgba(181, 233, 230, 0.3);
   }
   ${sp`
     margin-bottom: 2px;
@@ -85,6 +93,7 @@ const FormBox = styled.div`
   `}
 `;
 
+// フォームの文字
 const FormInput = styled.input`
   background: none;
   border: none;
@@ -92,6 +101,7 @@ const FormInput = styled.input`
   text-align: center;
   width: 100%;
   font-family: "Montserrat", sans-serif;
+  font-weight: bold;
   line-height: 37px;
   color: #333;
   pointer-events: all;
@@ -105,23 +115,26 @@ const FormInput = styled.input`
   `}
 `;
 
+// register
 const SubmitButton = styled.div`
   position: relative;
-  color: #fff;
+  color: skyblue;
   font-size: 15px;
+  font-weight: bold;
   width: 420px;
   margin: 20px auto 0;
   outline: none;
   text-align: center;
+  /* text-shadow: blue; */
   font-weight: 500;
-  border: 1px solid #3acbec;
+  border: 1px solid rgba(147, 229, 223, 0.7);
   padding: 14px 0;
-  border-radius: 6px;
+  /* border-radius: 6px; */
   transition: 0.3s linear;
-  background-color: #3acbec;
+  background-color: none;
   &:hover {
-    box-shadow: 0 0 16px rgba(255, 255, 255, 0.4);
-    text-shadow: 0 0 16px #fff;
+    box-shadow: 0 0 16px;
+    text-shadow: 0 0 16px skyblue;
   }
   ${sp`
     margin-bottom: 5px;
@@ -146,16 +159,16 @@ const Form = (props) => {
       <TitleText>うちゅいったー</TitleText>
       <Buttons>
         <Button isSelected={!isSignIn} onClick={() => setisSignIn(false)}>
-          Register
+          新規登録
         </Button>
         <Button isSelected={isSignIn} onClick={() => setisSignIn(true)}>
-          Login
+          ログイン
         </Button>
       </Buttons>
       <FormBox>
         <FormInput
           type="email"
-          placeholder="@email"
+          placeholder="メールアドレス"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -163,7 +176,7 @@ const Form = (props) => {
       <FormBox>
         <FormInput
           type="password"
-          placeholder="password"
+          placeholder="パスワード"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
@@ -175,7 +188,7 @@ const Form = (props) => {
             : () => createUser(email, password, props)
         }
       >
-        {isSignIn ? "Login" : "Register"}
+        {isSignIn ? "ログイン" : "新規登録"}
       </SubmitButton>
     </div>
   );
