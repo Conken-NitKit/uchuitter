@@ -80,7 +80,8 @@ const UchueetButton = styled.button`
   font-weight: bold;
   padding: 2px 16px;
   margin: 6px 8px;
-  background-color: rgb(29, 161, 242);
+  background-color: rgb(147, 208, 247);
+  background-color: ${(props) => (props.disabled ? '#93d0f7' : '#1da1f2')};
 `;
 
 const Dialog = styled.p`
@@ -133,7 +134,7 @@ const UchueetModal = (props) => {
           onChange={(e) => {
             setTweetText(e.target.value)
              setNumberOfWords(e.target.value.length);
-             setDisabled(numberOfWords > 140)
+             setDisabled(e.target.value.length > 140)
           }}
           />
         </ModalBody>
@@ -141,7 +142,7 @@ const UchueetModal = (props) => {
           <UchueetButton
             disabled={disabled}
             onClick={async () => {
-                const ngWord = ['ばか','あほ','ごみかす','しね','くそやろう','ﾀﾋね','ころす','きしょい']
+                const ngWord = ['ばか','あほ','ごみかす','しね','くそやろう','ﾀﾋね','ころす','きしょい','バカ','馬鹿','死ね','アホ','気持ち悪い','キモい','ハゲ','チビ','デブ']
                 for (let i = 0; i < ngWord.length; i++) {
                   const result = tweetText.indexOf(ngWord[i])
                   if(result !== -1){
