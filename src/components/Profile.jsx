@@ -108,7 +108,7 @@ const TrashIconDiv = styled.div`
 const Profile = (props) => {
   const [userName, setUserName] = useState("");
   const [canEdit, setCanEdit] = useState(false);
-  const [canTrash, setCanTrash] = useState(false);
+  const [canTrash, setCanTrash] = useState("");
 
   const [account, setAccount] = useState(null);
 
@@ -198,7 +198,7 @@ const Profile = (props) => {
               <TweetText>{tweet.content}</TweetText>
               <TrashIconDiv>
                 <Trash
-                  onClick={() => setCanTrash(true)}
+                  onClick={() => setCanTrash(tweet.tweetId)}
                   fontSize="28px"
                   backgroundcolor="rgba(153,195,153,0.75)"
                   color="rgba(153, 195, 153, 0.75)"
@@ -207,7 +207,30 @@ const Profile = (props) => {
             </TweetCard>
           </DefaultDiv>
         ))}
-      {canTrash && <TrashModal close={() => setCanTrash(false)} />}
+      {canTrash !== "" && (
+        <TrashModal
+          remove={() => {
+            const unSub = auth.onAuthStateChanged(async (user) => {
+              const uchuitterRef =
+                user && db.collection("uchuitter").doc(user.uid);
+              if (user) {
+                const postData = account;
+                const newTweets = account.tweets.filter(
+                  (pastTweet) => pastTweet.tweetId !== canTrash
+                );
+                setAccount({...postData, tweet: newTweets});
+                await uchuitterRef.set({ ...postData, tweets: newTweets });
+                props.close();
+              } else {
+                props.history.push("login");
+              }
+            });
+            unSub();
+            setCanTrash("");
+          }}
+          close={() => setCanTrash("")}
+        />
+      )}
     </ProfileDiv>
   );
 };

@@ -67,7 +67,7 @@ const TrashModal = (props) => {
         <ModalTitle>削除</ModalTitle>
         <ModalBody>この投稿を削除しますか?</ModalBody>
         <ModalChoices>
-          <ModalChoice onClick={props.close}>OK</ModalChoice>
+          <ModalChoice onClick={props.remove}>OK</ModalChoice>
           <ModalChoice onClick={props.close}>Cansel</ModalChoice>
         </ModalChoices>
       </Modal>
