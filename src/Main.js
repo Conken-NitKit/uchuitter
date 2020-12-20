@@ -73,39 +73,41 @@ class ThreeScene extends React.Component {
       });
     });
 
-    console.log(createdTimeLine);
-
-    await createdTimeLine.forEach((tweet, i) => {
-      console.log(tweet);
+    await createdTimeLine.forEach(async (tweet, i) => {
       // JSX要素を文字列(string)に変換
       //const cssId = <TweetCard TweetId={i}/>
-      const stringElement = renderToString(
-        <TweetCard
-          autherId={tweet.autherId}
-          content={tweet.content}
-          createAt={tweet.createAt}
-        />
-      );
+      await UchuitterRef.doc(tweet.autherId)
+        .get()
+        .then(async (doc) => {
+          const autherName = doc.data().displayName;
 
-      console.log(stringElement);
-      // 生成したstringをもとにCSS3DObjectを生成する
-      const cssElement = createCSS3DObject(stringElement);
+          const stringElement = renderToString(
+            <TweetCard
+              autherName={autherName}
+              content={tweet.content}
+              createAt={tweet.createAt}
+            />
+          );
 
-      const phi = Math.acos(-1 + (2 * i) / createdTimeLine.length);
-      const theta = Math.sqrt(createdTimeLine.length * Math.PI) * phi;
+          // 生成したstringをもとにCSS3DObjectを生成する
+          const cssElement = createCSS3DObject(stringElement);
 
-      cssElement.position.setFromSphericalCoords(1000, phi, theta);
+          const phi = Math.acos(-1 + (2 * i) / createdTimeLine.length);
+          const theta = Math.sqrt(createdTimeLine.length * Math.PI) * phi;
 
-      cssElement.element.addEventListener("click", (e) => {
-        console.log(tweet.tweetId);
-      });
+          cssElement.position.setFromSphericalCoords(1000, phi, theta);
 
-      vector.copy(cssElement.position).multiplyScalar(2);
+          cssElement.element.addEventListener("click", (e) => {
+            console.log(tweet.tweetId);
+          });
 
-      cssElement.lookAt(vector);
+          vector.copy(cssElement.position).multiplyScalar(2);
 
-      // シーンに追加する
-      this.scene.add(cssElement);
+          cssElement.lookAt(vector);
+
+          // シーンに追加する
+          this.scene.add(cssElement);
+        });
     });
 
     //コンテンツの表示

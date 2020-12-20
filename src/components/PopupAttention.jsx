@@ -13,6 +13,7 @@ const ModalBack = styled.div`
   border-radius: 15px;
   z-index: 99;
 `;
+
 const Modal = styled.div`
   position: absolute;
   top: 50%;
@@ -30,7 +31,7 @@ const ModalTitle = styled.p`
   position: relative;
   display: inline-block;
   font-family: monospace;
-  font-size: 100%;
+  font-size: 120%;
   width: 100%;
   text-align: center;
   font-weight: bold;
@@ -54,12 +55,12 @@ const ModalChoice = styled.p`
   bottom: 16px;
   text-align: center;
   font-family: monospace;
-  font-size: 100%;
+  font-size: 140%;
   color: white;
   padding: 1%;
-  display: inline-block;
+  /* display: inline-block;
   border: solid 1px white;
-  border-radius: 10px;
+  border-radius: 10px; */
   -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
@@ -79,11 +80,11 @@ const PopupAttention = (props) => {
   return (
     <ModalBack>
       <Modal>
-        <ModalTitle>ATTENTION</ModalTitle>
+        <ModalTitle>注意！！</ModalTitle>
         <ModalBody>
           禁止用語が含まれているため､うちゅいーとできません。
         </ModalBody>
-        <ModalChoice onClick={props.close}>Close</ModalChoice>
+        <ModalChoice onClick={props.close}>閉じる</ModalChoice>
       </Modal>
     </ModalBack>
   );
