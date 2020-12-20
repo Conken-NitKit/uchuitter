@@ -118,7 +118,7 @@ const UchuiteButton = styled.div`
 `;
 
 const Humberger = (props) => {
-  const [isOpen, setIsOpen] = useState(false);{
+  const [isOpen, setIsOpen] = useState(false);
   const [viewProfile, setViewProfile] = useState(false);
   const [viewEditor, setViewEditor] = useState(false);
   /*
@@ -173,6 +173,5 @@ const Humberger = (props) => {
       {/*うちゅいーとを閉じるボタン*/}
     </>
   );
-};
-
+}
 export default Humberger;
