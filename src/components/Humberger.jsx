@@ -175,7 +175,6 @@ const Humberger = (props) => {
   プロフィールを出す
   うちゅいーと画面を出す
   */
-  
 
   return (
     <>

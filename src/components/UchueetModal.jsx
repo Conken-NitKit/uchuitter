@@ -116,27 +116,36 @@ const UchueetModal = (props) => {
         </ModalHeader>
         <ModalBody>
           <ModalTextField
-          value={tweetText}
-          placeholder={"宇宙空間にメッセージを送ろう！！"}
-          onChange={(e) => {
-            setTweetText(e.target.value)
-             setNumberOfWords(e.target.value.length);
-             setDisabled(numberOfWords > 140)
-          }}
+            value={tweetText}
+            placeholder={"宇宙空間にメッセージを送ろう！！"}
+            onChange={(e) => {
+              setTweetText(e.target.value);
+              setNumberOfWords(e.target.value.length);
+              setDisabled(numberOfWords > 140);
+            }}
           />
         </ModalBody>
-        <ModalFooter　disabled={disabled}>
+        <ModalFooter disabled={disabled}>
           <UchueetButton
             disabled={disabled}
             onClick={async () => {
-                const ngWord = ['ばか','あほ','ごみかす','しね','くそやろう','ﾀﾋね','ころす','きしょい']
-                for (let i = 0; i < ngWord.length; i++) {
-                  const result = tweetText.indexOf(ngWord[i])
-                  if(result !== -1){
-                    setShowAttension(true)
-                    return;
-                  }
+              const ngWord = [
+                "ばか",
+                "あほ",
+                "ごみかす",
+                "しね",
+                "くそやろう",
+                "ﾀﾋね",
+                "ころす",
+                "きしょい",
+              ];
+              for (let i = 0; i < ngWord.length; i++) {
+                const result = tweetText.indexOf(ngWord[i]);
+                if (result !== -1) {
+                  setShowAttension(true);
+                  return;
                 }
+              }
               const postData = {
                 ...account,
                 tweets: [
@@ -151,7 +160,7 @@ const UchueetModal = (props) => {
                 ],
               };
               await db.collection("uchuitter").doc(account.id).set(postData);
-              props.close()
+              props.close();
             }}
           >
             うちゅいーとする
@@ -160,7 +169,9 @@ const UchueetModal = (props) => {
             <h3>{numberOfWords} / 140</h3>
           </div>
         </ModalFooter>
-        {showAttention && <PopupAttention close={() => setShowAttension(false)}/>}
+        {showAttention && (
+          <PopupAttention close={() => setShowAttension(false)} />
+        )}
       </Modal>
     </ModalBack>
   );

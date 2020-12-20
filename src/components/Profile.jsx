@@ -183,7 +183,7 @@ const Profile = (props) => {
           </TweetCard>
         </DefaultDiv>
       ))}
-      {canTrash && <TrashModal close={() => setCanTrash(false)}/>}
+      {canTrash && <TrashModal close={() => setCanTrash(false)} />}
     </ProfileDiv>
   );
 };
