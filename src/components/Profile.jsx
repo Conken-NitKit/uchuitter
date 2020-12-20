@@ -147,7 +147,8 @@ const Profile = (props) => {
     return () => {
       unSub();
     };
-  }, [userName]); // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userName]);
 
   return (
     <ProfileDiv>
@@ -218,7 +219,7 @@ const Profile = (props) => {
                 const newTweets = account.tweets.filter(
                   (pastTweet) => pastTweet.tweetId !== canTrash
                 );
-                setAccount({...postData, tweet: newTweets});
+                setAccount({ ...postData, tweet: newTweets });
                 await uchuitterRef.set({ ...postData, tweets: newTweets });
                 props.close();
               } else {
