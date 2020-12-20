@@ -217,6 +217,5 @@ const Humberger = (props) => {
       {viewEditor && <UchueetModal close={() => setViewEditor(false)} />}
     </>
   );
-};
-
+}
 export default Humberger;
