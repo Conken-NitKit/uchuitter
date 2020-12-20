@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { db, auth } from "../firebase";
 import generateUuid from "../functions/generateUuid";
 import Close from "react-ionicons/lib/MdClose";
+import PopupAttention from "./PopupAttention";
 
 const ModalBack = styled.div`
   position: fixed;
@@ -54,6 +55,9 @@ const ModalTextField = styled.textarea`
 const ModalFooter = styled.div`
   height: 76px;
   width: 90vw;
+  color: ${(props) => (props.disabled ? "red" : "white")};
+  padding-left: 40px;
+  padding-top: 10px;
   max-width: 720px;
   border-radius: 0 0 16px 16px;
   background-color: rgb(21, 32, 43);
@@ -72,13 +76,16 @@ const UchueetButton = styled.button`
   border-radius: 22px;
   font-weight: bold;
   padding: 2px 16px;
-  margin: 12px 8px;
+  margin: 6px 8px;
   background-color: rgb(29, 161, 242);
 `;
 
 const UchueetModal = (props) => {
   const [account, setAccount] = useState(null);
   const [tweetText, setTweetText] = useState("");
+  const [disabled, setDisabled] = useState(false);
+  const [showAttention, setShowAttension] = useState(false);
+  const [numberOfWords, setNumberOfWords] = useState(0);
 
   useEffect(() => {
     const unSub = auth.onAuthStateChanged(async (user) => {
@@ -111,12 +118,25 @@ const UchueetModal = (props) => {
           <ModalTextField
           value={tweetText}
           placeholder={"宇宙空間にメッセージを送ろう！！"}
-          onChange={(e) => setTweetText(e.target.value)}
+          onChange={(e) => {
+            setTweetText(e.target.value)
+             setNumberOfWords(e.target.value.length);
+             setDisabled(numberOfWords > 140)
+          }}
           />
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter　disabled={disabled}>
           <UchueetButton
+            disabled={disabled}
             onClick={async () => {
+                const ngWord = ['ばか','あほ','ごみかす','しね','くそやろう','ﾀﾋね','ころす','きしょい']
+                for (let i = 0; i < ngWord.length; i++) {
+                  const result = tweetText.indexOf(ngWord[i])
+                  if(result !== -1){
+                    setShowAttension(true)
+                    return;
+                  }
+                }
               const postData = {
                 ...account,
                 tweets: [
@@ -136,7 +156,11 @@ const UchueetModal = (props) => {
           >
             うちゅいーとする
           </UchueetButton>
+          <div id="counter">
+            <h3>{numberOfWords} / 140</h3>
+          </div>
         </ModalFooter>
+        {showAttention && <PopupAttention close={() => setShowAttension(false)}/>}
       </Modal>
     </ModalBack>
   );

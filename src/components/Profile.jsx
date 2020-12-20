@@ -4,6 +4,8 @@ import Create from "react-ionicons/lib/MdCreate";
 import Close from "react-ionicons/lib/MdClose";
 import Trash from "react-ionicons/lib/IosTrashOutline";
 
+import TrashModal from "./TrashModal";
+
 const ProfileDiv = styled.div`
   position: fixed;
   top: 0;
@@ -111,6 +113,7 @@ const TrashIconDiv = styled.div`
 const Profile = (props) => {
   const [userName, setUserName] = useState("kubo-hide-kun");
   const [canEdit, setCanEdit] = useState(false);
+  const [canTrash, setCanTrash] = useState(false);
 
   return (
     <ProfileDiv>
@@ -171,7 +174,7 @@ const Profile = (props) => {
             <TrashIconDiv>
               {/* ツイート削除ボタン */}
               <Trash
-                onClick={() => console.log("trash")}
+                onClick={() => setCanTrash(true)}
                 fontSize="28px"
                 backgroundcolor="rgba(153,195,153,0.75)"
                 color="rgba(153, 195, 153, 0.75)"
@@ -180,6 +183,7 @@ const Profile = (props) => {
           </TweetCard>
         </DefaultDiv>
       ))}
+      {canTrash && <TrashModal close={() => setCanTrash(false)}/>}
     </ProfileDiv>
   );
 };
