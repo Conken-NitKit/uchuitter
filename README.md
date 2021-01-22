@@ -1,4 +1,4 @@
-# うちゅいったー | 宇宙時代のSNS
+# [うちゅいったー | 宇宙時代のSNS](uchuitter.netlify.app/)
 
 ## Description
 WebGLの技術を使い宇宙空間を模した３D空間上に各ユーザーが投稿できる掲示板風SNSである．
@@ -12,6 +12,7 @@ WebGLの技術を使い宇宙空間を模した３D空間上に各ユーザー�
 - Three.js
 - Firebase Authentication
 - Firebase Cloud Function
+- Netlify
 
 ## Features
 #### 新規登録・ログイン
