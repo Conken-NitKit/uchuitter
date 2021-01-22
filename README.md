@@ -20,18 +20,18 @@ FirebaseAuthenticationを用いユーザー認証を行っている．
 対応する Sign-in method は 『メール/パスワード』 であり，以下の画面からログインが可能である．
 ![screen shot / login](https://user-images.githubusercontent.com/41711771/105449975-cabe2c80-5cbc-11eb-8794-7251868ce6ea.png)
 
-#### タイムライン画面
+#### タイムライン
 各ユーザーの投稿は以下のな形で確認できる．
 描画に関してはThree.jsを用いて3D空間を表現し，データの管理は Cloud Firestore を利用しておこなっている．
 ![screen shot / time-line](https://user-images.githubusercontent.com/41711771/105449873-95194380-5cbc-11eb-8888-a0c67c7cf8e7.png)
 
-#### 投稿画面
+#### 投稿
 右下の + のアイコンから投稿が可能．
 不適切な投稿に関するバリデーション機能も実装している．
 ![screen shot / submit](https://user-images.githubusercontent.com/41711771/105449898-9d717e80-5cbc-11eb-8524-a8f1320ed4a9.png)
 ![screen shot / validation](https://user-images.githubusercontent.com/41711771/105450052-00fbac00-5cbd-11eb-9284-33676d1ebfda.png)
 
-#### プロフィール画面
+#### プロフィールの修正
 左上のハンバーガーメニューから遷移可能．
 プロフィール画面ではユーザー名の変更及び過去の投稿の削除を行うことが可能．
 ![screen shot / profile](https://user-images.githubusercontent.com/41711771/105449886-9c405180-5cbc-11eb-9ae6-439ee3489e4d.png)
