@@ -1,4 +1,4 @@
-# [うちゅいったー | 宇宙時代のSNS](uchuitter.netlify.app/)
+# [うちゅいったー | 宇宙時代のSNS](https://uchuitter.netlify.app/)
 
 ## Description
 WebGLの技術を使い宇宙空間を模した３D空間上に各ユーザーが投稿できる掲示板風SNSである．
@@ -38,6 +38,6 @@ FirebaseAuthenticationを用いユーザー認証を行っている．
 
 
 ## Links
-- [**うちゅいったー**](uchuitter.netlify.app/)
+- [**うちゅいったー**](https://uchuitter.netlify.app/)
 - [**うちゅいったー | Topa'z (メディア)**](https://topaz.dev/projects/c00svaq23akg008oger0)
 - [**ハックツCONTENTS : ハックツハッカソン開催!!! (メディア)**](https://note.com/hackz_inc/n/nb0de2fb2f638)
