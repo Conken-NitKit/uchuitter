@@ -1,70 +1,42 @@
-# Getting Started with Create React App
+# うちゅいったー | 宇宙時代のSNS
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
+WebGLの技術を使い宇宙空間を模した３D空間上に各ユーザーが投稿できる掲示板風SNSである．
 
-## Available Scripts
+> 『ハックツハッカソン/プレシオ杯』に提出する作品として開発．テーマは『技術の無駄遣い』
 
-In the project directory, you can run:
+## Built With
+- React
+- TypeScript(一部)
+- Styled-components
+- Three.js
+- Firebase Authentication
+- Firebase Cloud Function
 
-### `yarn start`
+## Features
+### 新規登録・ログイン
+FirebaseAuthenticationを用いユーザー認証を行っている．
+対応する Sign-in method は 『メール/パスワード』 であり，以下の画面からログインが可能である．
+![screen shot / login](https://user-images.githubusercontent.com/41711771/105449975-cabe2c80-5cbc-11eb-8794-7251868ce6ea.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### タイムライン画面
+各ユーザーの投稿は以下のな形で確認できる．
+描画に関してはThree.jsを用いて3D空間を表現し，データの管理は Cloud Firestore を利用しておこなっている．
+![screen shot / time-line](https://user-images.githubusercontent.com/41711771/105449873-95194380-5cbc-11eb-8888-a0c67c7cf8e7.png)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### 投稿画面
+右下の + のアイコンから投稿が可能．
+不適切な投稿に関するバリデーション機能も実装している．
+![screen shot / submit](https://user-images.githubusercontent.com/41711771/105449898-9d717e80-5cbc-11eb-8524-a8f1320ed4a9.png)
+![screen shot / validation](https://user-images.githubusercontent.com/41711771/105450052-00fbac00-5cbd-11eb-9284-33676d1ebfda.png)
 
-### `yarn test`
+### プロフィール画面
+左上のハンバーガーメニューから遷移可能．
+プロフィール画面ではユーザー名の変更及び過去の投稿の削除を行うことが可能．
+![screen shot / profile](https://user-images.githubusercontent.com/41711771/105449886-9c405180-5cbc-11eb-9ae6-439ee3489e4d.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Links
+- [**うちゅいったー**](uchuitter.netlify.app/)
+- [**うちゅいったー | Topa'z (メディア)**](https://topaz.dev/projects/c00svaq23akg008oger0)
+- [**ハックツCONTENTS : ハックツハッカソン開催!!! (メディア)**](https://note.com/hackz_inc/n/nb0de2fb2f638)
