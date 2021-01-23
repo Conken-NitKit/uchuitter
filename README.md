@@ -34,7 +34,7 @@ FirebaseAuthenticationを用いユーザー認証を行っている．
 #### プロフィールの修正
 左上のハンバーガーメニューから遷移可能．
 プロフィール画面ではユーザー名の変更及び過去の投稿の削除を行うことが可能．
-![screen shot / profile](https://user-images.githubusercontent.com/41711771/105449886-9c405180-5cbc-11eb-9ae6-439ee3489e4d.png)
+![screen shot / profile](https://user-images.githubusercontent.com/41711771/105568556-bb52e800-5d7d-11eb-80eb-033a0dab0be8.png)
 
 
 ## Links
